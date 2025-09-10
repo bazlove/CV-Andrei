@@ -17,7 +17,7 @@
   <meta property="og:title" content="Andrei Bazlov — COO / Head of Operations / Growth & Product Manager">
   <meta property="og:description" content="Scaled revenue ×5, improved margin to 53%, raised NPS/CSI to 70%, ensured >90% on-time delivery. Download CV (RU/EN).">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://bazlove.com/">
+  <meta property="og:url" content="https://cv.bazlove.com/">
   <meta property="og:image" content="/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -317,8 +317,11 @@
       });
 
       function track(kind, url){
-        try{ if(window.gtag) gtag('event',kind,{file_url:url,ref:document.referrer, ...getUTMs()}); }catch(e){}
-        try{ if(typeof ym==='function') ym(YM_COUNTER_ID,'reachGoal',kind,getUTMs()); }catch(e){}
+		try{
+			if (typeof ym === 'function' && window.YM_COUNTER_ID) {
+				ym(window.YM_COUNTER_ID, 'reachGoal', kind, getUTMs());
+			}
+		}catch(e){}
       }
       const bind = (el, ev, url) => el && el.addEventListener('click',()=>track(ev,url));
       bind(ruBtn,'download_cv_pdf_ru',ruUrl);
@@ -410,10 +413,13 @@
 <script>
 (function() {
   const KEY = 'consent_analytics';
+  const METRIKA_ID = 104073832;            // ← ID
   const overlay = document.getElementById('consent-overlay');
   const modal   = document.getElementById('consent-modal');
   const btnYes  = document.getElementById('consent-accept');
   const btnNo   = document.getElementById('consent-reject');
+
+  window.YM_COUNTER_ID = METRIKA_ID;
 
   const lockScroll = () => { document.documentElement.style.overflow = 'hidden'; };
   const unlockScroll = () => { document.documentElement.style.overflow = ''; };
@@ -429,55 +435,45 @@
     if (e.key === 'Escape') { reject(); }
   }
 
-  function hideModal(){
-    if (!overlay) return;
-    overlay.style.display = 'none';
-    overlay.removeEventListener('keydown', focusTrap);
-    unlockScroll();
-  }
+  function hideModal(){ if (!overlay) return; overlay.style.display = 'none'; overlay.removeEventListener('keydown', focusTrap); unlockScroll(); }
+  function showModal(){ overlay.style.display = 'flex'; lockScroll(); overlay.addEventListener('keydown', focusTrap); setTimeout(() => btnYes && btnYes.focus(), 0); }
 
-  function accept(){
-    localStorage.setItem(KEY, 'yes');
-    hideModal();
-    loadMetrica();
-  }
-
-  function reject(){
-    localStorage.setItem(KEY, 'no');
-    hideModal();
-  }
-
-  function showModal(){
-    overlay.style.display = 'flex';
-    lockScroll();
-    overlay.addEventListener('keydown', focusTrap);
-    setTimeout(() => btnYes && btnYes.focus(), 0);
-  }
-
-  const val = localStorage.getItem(KEY);
-  if (val === 'yes') { hideModal(); loadMetrica(); }
-  else if (val === 'no') { hideModal(); }
-  else { showModal(); }
+  function accept(){ localStorage.setItem(KEY, 'yes'); hideModal(); initMetrika(); }
+  function reject(){ localStorage.setItem(KEY, 'no');  hideModal(); }
 
   btnYes && (btnYes.onclick = accept);
   btnNo  && (btnNo.onclick  = reject);
 
-  function loadMetrica() {
-    const METRIKA_ID = 104073832; // ← ID
-    (function(m,e,t,r,i,k,a){
-      m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-      m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0];
-      k.async=1;k.src=r;a.parentNode.insertBefore(k,a);
-    })(window,document,"script","https://mc.yandex.ru/metrika/tag.js?id=104073832","ym");
+  const val = localStorage.getItem(KEY);
+  if (val === 'yes') { hideModal(); initMetrika(); }
+  else if (val === 'no') { hideModal(); }
+  else { showModal(); }
 
-    ym(104073832,"init",{ clickmap:true, trackLinks:true, accurateTrackBounce:true, defer:true });
+  function initMetrika(){
+    if (window.__ymAlreadyInit) return;
+    window.__ymAlreadyInit = true;
+
+    window.ym = window.ym || function(){ (window.ym.a = window.ym.a || []).push(arguments); };
+    window.ym.l = 1 * new Date();
+
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://mc.yandex.ru/metrika/tag.js';
+    s.onload = function(){
+      try {
+        ym(METRIKA_ID, 'init', { clickmap:true, trackLinks:true, accurateTrackBounce:true, defer:true });
+        console.debug('[YM] init ok', METRIKA_ID);
+      } catch(e) { console.warn('[YM] init error', e); }
+    };
+    s.onerror = function(e){ console.warn('[YM] load error', e); };
+    (document.head || document.body).appendChild(s);
 
     var nos = document.createElement('noscript');
-    nos.innerHTML = '<div><img src="https://mc.yandex.ru/watch/104073832" style="position:absolute; left:-9999px;" alt="" /></div>';
+    nos.innerHTML = '<div><img src="https://mc.yandex.ru/watch/'+ METRIKA_ID +'" style="position:absolute; left:-9999px;" alt="" /></div>';
     document.body.appendChild(nos);
   }
 })();
-</script>	
+</script>
 	
 </body>
 </html>
