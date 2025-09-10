@@ -52,10 +52,9 @@
     margin:0; padding:0; background:var(--bg); color:var(--ink);
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","DejaVu Sans",sans-serif;
     transition:background .3s,color .3s;
-    overflow-x:hidden; /* avoid horizontal scroll on mobile */
+    overflow-x:hidden;
   }
 
-  /* top scroll progress bar */
   .scrollbar{
     position:fixed; top:0; left:0; height:2px; width:0; background:var(--success);
     z-index:100; pointer-events:none; transition:width .1s linear;
@@ -63,7 +62,6 @@
 
   .wrap{ max-width:1024px; margin:0 auto; padding:32px 20px 56px }
 
-  /* sticky header with subtle glass effect */
   .header-bar{
     position:sticky; top:0; z-index:40;
     background:color-mix(in oklab, var(--bg) 92%, transparent);
@@ -117,7 +115,7 @@
     border:1px solid var(--cta); background:var(--cta); color:#fff;
     padding:10px 16px; border-radius:10px; font-weight:600; cursor:pointer; text-decoration:none;
     transition:background .15s,border-color .15s;
-    min-height:44px; /* better tap target */
+    min-height:44px;
   }
   .btn.secondary{ background:transparent; color:var(--cta) }
   .btn:hover{ background:var(--success); border-color:var(--success) }
@@ -139,7 +137,6 @@
   .kpi .ico{ width:40px; height:40px; display:flex; align-items:center; justify-content:center; }
   .kpi .ico svg{ width:28px; height:28px; overflow:visible; opacity:.95 }
 
-  /* tooltip over kpi (hidden on mobile later) */
   .kpi .tip{
     position:absolute; left:16px; right:16px; bottom:100%; transform:translateY(-8px);
     background:var(--card); color:var(--ink); border:1px solid var(--line); border-radius:10px; padding:8px 10px;
@@ -151,14 +148,13 @@
     background:var(--card); border-left:1px solid var(--line); border-bottom:1px solid var(--line); transform:rotate(45deg);
   }
 
-  /* anchor offset to avoid sticky header overlap */
   #download, #about, #achievements { scroll-margin-top: 96px; }
   .card.kpi-spacer{ margin-bottom:54px }
 
   /* Footer */
   footer{ margin-top:44px; color:var(--muted); font-size:14px }
   footer .cols{ display:grid; grid-template-columns: 1.4fr 0.9fr auto; gap:16px; align-items:center }
-  footer a{ color:var(--cta); text-decoration:none; padding:4px 0 } /* easier tap */
+  footer a{ color:var(--cta); text-decoration:none; padding:4px 0 }
   footer .footer-link { color:inherit; text-decoration:none; transition:all .2s ease; }
   footer .footer-link:hover { text-decoration:underline; opacity:.85; }
   @media (max-width:900px){ footer .cols{ grid-template-columns:1.1fr 0.9fr; grid-auto-rows:auto } }
@@ -182,7 +178,7 @@
   input:checked + .slider{ background:var(--success); border-color:var(--success) }
   input:checked + .slider::after{ transform:translateX(20px) }
 
-  /* Sticky CTA (mobile shows) */
+  /* Sticky CTA */
   .sticky-cta{
     position:fixed; left:0; right:0; bottom:0; background:var(--card);
     border-top:1px solid var(--line); padding:10px 12px; display:none; gap:10px; z-index:50;
@@ -196,14 +192,12 @@
   /* =========================
      Mobile & UX enhancements
      ========================= */
-
-  /* Better mobile typography */
   @media (max-width:520px){
     h1{ font-size:24px; }
     .subtitle{ font-size:13.5px; line-height:1.35; }
   }
 
-  /* Consent banner as bottom-sheet on mobile */
+  /* Consent banner as bottom-sheet */
   @media (max-width:560px){
     #consent-overlay{ align-items:flex-end !important; }
     #consent-modal{
@@ -214,16 +208,30 @@
     #consent-modal p{ font-size:14px; }
   }
 
-  /* Header layout: center brand/nav, move contacts below on mobile */
+  /* Header adjustments on mobile */
   @media (max-width:560px){
     .header-bar header{ grid-template-columns:1fr; row-gap:10px; }
     .brand{ align-items:center; text-align:center; }
-    .topnav{ justify-content:center; gap:12px; }
     .contacts{ align-items:center; text-align:center; gap:6px; margin-top:4px; }
     .contacts .row{ justify-content:center; }
   }
 
-  /* Achievements: CSS-only slider on mobile; 2 cols on tablets */
+  /* Anchor menu sticky at top (mobile only) */
+  @media (max-width:560px){
+    .header-bar{ position:static; }
+    .topnav{
+      position:sticky; top:0; z-index:45;
+      margin:0 -20px; padding:8px 16px;
+      background:color-mix(in oklab, var(--bg) 96%, transparent);
+      backdrop-filter:saturate(1.2) blur(6px);
+      border-bottom:1px solid var(--line);
+      justify-content:center;
+    }
+    .topnav a{ padding:8px 4px; }
+    #download, #about, #achievements{ scroll-margin-top:72px; }
+  }
+
+  /* Achievements: slider on mobile, 2 cols on tablet */
   @media (max-width:900px) and (min-width:561px){
     .kpi-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
   }
@@ -232,48 +240,32 @@
       display:flex; gap:12px; overflow-x:auto;
       padding:6px 16px 12px;
       scroll-snap-type:x mandatory; scroll-padding-inline:16px;
-      -webkit-overflow-scrolling:touch; position:relative;
+      -webkit-overflow-scrolling:touch;
     }
     .kpi-grid .kpi{
       flex:0 0 85%; max-width:85%;
       scroll-snap-align:start; scroll-snap-stop:always;
       margin:0; padding:16px; border-radius:14px;
     }
-    .kpi-grid .kpi .tip{ display:none; } /* hide hover tips on mobile */
-
-    /* subtle gradient hints that list is scrollable */
-    .kpi-grid::before, .kpi-grid::after{
-      content:""; position:absolute; top:0; bottom:0; width:32px; pointer-events:none; z-index:5;
-    }
-    .kpi-grid::before{ left:0;  background:linear-gradient(to right, var(--bg) 60%, transparent); }
-    .kpi-grid::after { right:0; background:linear-gradient(to left,  var(--bg) 60%, transparent); }
-
-    /* hide scrollbars visually */
+    .kpi-grid .kpi .tip{ display:none; }
     .kpi-grid{ scrollbar-width:none; }
     .kpi-grid::-webkit-scrollbar{ display:none; }
+    /* gradients removed */
+    .kpi-grid::before, .kpi-grid::after{ display:none !important; content:none !important; }
   }
 
-  /* Sticky CTA: stack buttons vertically and ensure safe bottom space */
+  /* Sticky CTA buttons stacked */
   @media (max-width:520px){
     .sticky-cta{ flex-direction:column; padding:12px; gap:10px; }
     .sticky-cta .btn{ font-size:15px; min-height:44px; padding:12px 14px; }
-    .wrap{ padding-bottom:132px; } /* extra room under content for 2 stacked buttons */
+    .wrap{ padding-bottom:132px; }
   }
 
-  /* Anchor offset for very small screens */
-  @media (max-width:520px){
-    #download, #about, #achievements{ scroll-margin-top:110px; }
-  }
-
-  /* Respect reduced motion (accessibility & battery) */
   @media (prefers-reduced-motion: reduce){
     *{ animation:none !important; transition:none !important; scroll-behavior:auto; }
   }
 
-  /* Performance: defer rendering of lower sections */
-  #about, #achievements{ content-visibility:auto; contain-intrinsic-size: 800px; }
-
-  /* Dark theme: slightly brighter secondary text for readability */
+  #about, #achievements{ content-visibility:auto; contain-intrinsic-size:800px; }
   body.dark .small{ color:#b5bcc5; }
 </style>
 	
@@ -656,4 +648,5 @@
 </script>
 </body>
 </html>
+
 
