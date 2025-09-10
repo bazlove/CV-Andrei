@@ -408,12 +408,13 @@
     })();
   </script>
   
-<!-- Consent logic + Yandex.Metrika -->
+<!-- Consent + Yandex.Metrika (TEST MODE: force load) -->
 
 <script>
-(function() {
+(function () {
   const KEY = 'consent_analytics';
-  const METRIKA_ID = 104073832;            // ← ID
+  const METRIKA_ID = 104073832;           // ← ID
+  const FORCE_YM = true;
   const overlay = document.getElementById('consent-overlay');
   const modal   = document.getElementById('consent-modal');
   const btnYes  = document.getElementById('consent-accept');
@@ -438,16 +439,18 @@
   function hideModal(){ if (!overlay) return; overlay.style.display = 'none'; overlay.removeEventListener('keydown', focusTrap); unlockScroll(); }
   function showModal(){ overlay.style.display = 'flex'; lockScroll(); overlay.addEventListener('keydown', focusTrap); setTimeout(() => btnYes && btnYes.focus(), 0); }
 
-  function accept(){ localStorage.setItem(KEY, 'yes'); hideModal(); initMetrika(); }
-  function reject(){ localStorage.setItem(KEY, 'no');  hideModal(); }
+  function accept(){ localStorage.setItem(KEY,'yes'); hideModal(); try{ ym(METRIKA_ID,'reachGoal','consent_yes'); }catch(e){} }
+  function reject(){ localStorage.setItem(KEY,'no');  hideModal(); try{ ym(METRIKA_ID,'reachGoal','consent_no'); }catch(e){} }
 
   btnYes && (btnYes.onclick = accept);
   btnNo  && (btnNo.onclick  = reject);
 
   const val = localStorage.getItem(KEY);
-  if (val === 'yes') { hideModal(); initMetrika(); }
-  else if (val === 'no') { hideModal(); }
-  else { showModal(); }
+  if      (val === 'yes') hideModal();
+  else if (val === 'no')  hideModal();
+  else                    showModal();
+
+  if (FORCE_YM) initMetrika();
 
   function initMetrika(){
     if (window.__ymAlreadyInit) return;
@@ -461,7 +464,7 @@
     s.src = 'https://mc.yandex.ru/metrika/tag.js';
     s.onload = function(){
       try {
-        ym(METRIKA_ID, 'init', { clickmap:true, trackLinks:true, accurateTrackBounce:true, defer:true });
+        ym(METRIKA_ID,'init',{ clickmap:true, trackLinks:true, accurateTrackBounce:true, defer:true });
         console.debug('[YM] init ok', METRIKA_ID);
       } catch(e) { console.warn('[YM] init error', e); }
     };
@@ -469,7 +472,7 @@
     (document.head || document.body).appendChild(s);
 
     var nos = document.createElement('noscript');
-    nos.innerHTML = '<div><img src="https://mc.yandex.ru/watch/'+ METRIKA_ID +'" style="position:absolute; left:-9999px;" alt="" /></div>';
+    nos.innerHTML = '<div><img src="https://mc.yandex.ru/watch/'+ METRIKA_ID +'" style="position:absolute; left:-9999px;" alt=""></div>';
     document.body.appendChild(nos);
   }
 })();
