@@ -28,7 +28,7 @@
   <meta name="twitter:description" content="Scaled revenue ×5, margin 53%, NPS/CSI 70%, >90% on-time delivery. Download CV (RU/EN).">
   <meta name="twitter:image" content="/og-image.jpg">
 
-<style>
+	<style>
   /* =========================
      Design tokens (light/dark)
      ========================= */
@@ -148,7 +148,7 @@
     background:var(--card); border-left:1px solid var(--line); border-bottom:1px solid var(--line); transform:rotate(45deg);
   }
 
-  #download, #about, #achievements { scroll-margin-top: 96px; }
+  #download, #about, #achievements, #value { scroll-margin-top: 96px; }
   .card.kpi-spacer{ margin-bottom:54px }
 
   /* Footer */
@@ -228,7 +228,7 @@
       justify-content:center;
     }
     .topnav a{ padding:8px 4px; }
-    #download, #about, #achievements{ scroll-margin-top:72px; }
+    #download, #about, #achievements, #value { scroll-margin-top:72px; }
   }
 
   /* Achievements: slider on mobile, 2 cols on tablet */
@@ -267,8 +267,62 @@
 
   #about, #achievements{ content-visibility:auto; contain-intrinsic-size:800px; }
   body.dark .small{ color:#b5bcc5; }
+  
+  /* ===== Value ===== */
+#value { scroll-margin-top: 96px; }
+.value-intro{ color:var(--muted); margin:8px 0 16px; }
+
+.value-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.value-item{
+  display:flex; gap:12px; align-items:flex-start;
+  background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px;
+  transition:border-color .2s, box-shadow .2s, transform .2s, background .2s;
+}
+.value-item:hover, .value-item:focus-within{ border-color:var(--success); box-shadow:var(--glow); transform:translateY(-2px); }
+
+.value-icon{
+  width:34px; height:34px; display:flex; align-items:center; justify-content:center;
+  border-radius:10px; background:color-mix(in oklab, var(--success) 12%, transparent);
+  color:var(--success); flex:0 0 34px;
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+  will-change: transform;
+}
+.value-icon svg{ width:20px; height:20px; transition: transform .18s ease; transform-origin:50% 50%; }
+.value-item:hover .value-icon, .value-item:focus-within .value-icon{
+  transform: translateY(-2px) scale(1.04);
+  background: color-mix(in oklab, var(--success) 18%, transparent);
+  box-shadow: 0 6px 14px rgba(0,0,0,.08);
+}
+.value-item:active .value-icon{ transform: translateY(0) scale(0.98); }
+.value-item:hover .value-icon svg, .value-item:focus-within .value-icon svg{ transform: rotate(-2deg); }
+
+.value-item h4{ margin:2px 0 6px; font-size:16px; }
+.value-list{ margin:6px 0 0; padding-left:18px; }
+.value-list li{ margin:3px 0; }
+.value-list li::marker{ color:var(--success); }
+
+.value-pills{ display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+.value-pill{
+  border:1px solid var(--line); background:color-mix(in oklab, var(--bg) 96%, transparent);
+  padding:6px 10px; border-radius:999px; font-size:13.5px; color:var(--muted);
+}
+
+/* Tablet */
+@media (max-width:900px){ .value-grid{ grid-template-columns:repeat(2,1fr); } }
+/* Mobile */
+@media (max-width:560px){
+  .value-grid{ grid-template-columns:1fr; }
+  .value-item{ padding:12px; }
+  .value-intro{ margin-bottom:12px; }
+}
+
+/* Учитываем настройки пользователя по анимациям */
+@media (prefers-reduced-motion: reduce){
+  .value-icon, .value-icon svg, .value-item{ transition:none !important; transform:none !important; }
+}
+
 </style>
-	
+
 </head>
 
 <body id="top">
@@ -302,9 +356,10 @@
           <h1>Andrei Bazlov</h1>
           <p class="subtitle">Head of Operations & Technology / Product Manager / Head of Growth</p>
           <nav class="topnav" aria-label="Main navigation">
-            <a href="#download" data-nav="download">Get CV</a>
-            <a href="#about" data-nav="about">About</a>
-            <a href="#achievements" data-nav="achievements">Highlights</a>
+			<a href="#about" data-nav="about">About</a>
+			<a href="#achievements" data-nav="achievements">Highlights</a>
+			<a href="#value" data-nav="value">Value</a>
+			<a href="#download" data-nav="download">Get CV</a>
           </nav>
         </div>
 
@@ -340,7 +395,7 @@
 
     <div id="about" class="card">
       <h3>Обо мне</h3>
-      <p>Начинал карьеру в интернет-маркетинге и постепенно прошёл путь в агентстве до COO. Такой рост позволил мне понять бизнес «изнутри» (как работают маркетинг, SEO, продукт) и «сверху» (как управлять командами, процессами и финансами).</p>
+      <p>Начинал карьеру в интернет-маркетинге с нуля и постепенно прошёл путь в агентстве до COO. Такой рост позволил мне понять бизнес «изнутри» (как работают маркетинг, SEO, продукт) и «сверху» (как управлять командами, процессами и финансами).</p>
       <p>📈 За последние годы:</p>
       <ul>
         <li>помог компании вырасти в 5 раз по выручке</li>
@@ -399,6 +454,137 @@
         </div>
       </div>
     </div>
+
+<!-- Value -->
+<div id="value" class="card">
+  <h3>Чем могу быть полезен</h3>
+  <p class="value-intro">
+    Помогаю бизнесу и продуктам системно расти. Выстраиваю прозрачные метрики и управляемую операционку, чтобы быстро выходить на предсказуемые результаты.
+  </p>
+
+  <div class="value-grid">
+    <!-- Аудит -->
+    <article class="value-item">
+      <div class="value-icon" aria-hidden="true">
+        <!-- search -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </div>
+      <div>
+        <h4>Аудит</h4>
+        <ul class="value-list">
+          <li>BPM-процессы и регламенты</li>
+          <li>Продукт и воронка ценности</li>
+          <li>Маркетинг и каналы привлечения</li>
+          <li>Финансы, приоритеты, риски</li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- План роста -->
+    <article class="value-item">
+      <div class="value-icon" aria-hidden="true">
+        <!-- route -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="6" cy="6" r="3"></circle><circle cx="18" cy="18" r="3"></circle><path d="M8.59 8.59 15.41 15.41"></path>
+        </svg>
+      </div>
+      <div>
+        <h4>План роста</h4>
+        <ul class="value-list">
+          <li>Цели (OKR/KPI) и ключевые метрики</li>
+          <li>Каналы и гипотезы</li>
+          <li>P&amp;L и юнит-экономика</li>
+          <li>Дорожная карта</li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- Внедрение -->
+    <article class="value-item">
+      <div class="value-icon" aria-hidden="true">
+        <!-- sliders -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line>
+          <line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line>
+        </svg>
+      </div>
+      <div>
+        <h4>Внедрение</h4>
+        <ul class="value-list">
+          <li>CRM и сквозная аналитика</li>
+          <li>Регламенты и автоматизация</li>
+          <li>Карты компетенций, обучение, найм, онбординг</li>
+          <li>Интервью с клиентами и командой</li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- Контроль -->
+    <article class="value-item">
+      <div class="value-icon" aria-hidden="true">
+        <!-- activity -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+        </svg>
+      </div>
+      <div>
+        <h4>Контроль</h4>
+        <ul class="value-list">
+          <li>Отчётность и бюджетирование</li>
+          <li>Снижение CAC и цикла сделки</li>
+          <li>Рост LTV и маржинальности</li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- Форматы сотрудничества -->
+    <article class="value-item">
+      <div class="value-icon" aria-hidden="true">
+        <!-- handshake -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12.5 15.5 10 13l-3 3a2.121 2.121 0 1 0 3 3l2.5-2.5"></path>
+          <path d="M17 8h2a2 2 0 0 1 2 2v2"></path>
+          <path d="M3 12v-2a2 2 0 0 1 2-2h2"></path>
+          <path d="M8.5 8.5 12 12l3-3"></path>
+        </svg>
+      </div>
+      <div>
+        <h4>Форматы сотрудничества</h4>
+        <div class="value-pills">
+          <span class="value-pill">Разовый консалтинг</span>
+          <span class="value-pill">Частичная занятость</span>
+          <span class="value-pill">Фулл-тайм</span>
+          <span class="value-pill">Наставничество команды</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Роли -->
+    <article class="value-item">
+      <div class="value-icon" aria-hidden="true">
+        <!-- users -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+      </div>
+      <div>
+        <h4>Роли</h4>
+        <div class="value-pills">
+          <span class="value-pill">Руководитель проекта/команды</span>
+          <span class="value-pill">Помощник CEO</span>
+          <span class="value-pill">Адвайзер</span>
+		  <span class="value-pill">Консультант</span>
+        </div>
+      </div>
+    </article>
+  </div>
+</div>
 
     <footer>
       <div class="cols">
@@ -522,8 +708,9 @@
       const links = [...document.querySelectorAll('.topnav a')];
       const map = {
         download: document.getElementById('download'),
-        about: document.getElementById('about'),
-        achievements: document.getElementById('achievements')
+		about: document.getElementById('about'),
+		achievements: document.getElementById('achievements'),
+		value: document.getElementById('value')
       };
       const byId = id => links.find(a => a.dataset.nav === id);
 
@@ -648,7 +835,3 @@
 </script>
 </body>
 </html>
-
-
-
-
