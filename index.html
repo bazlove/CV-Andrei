@@ -373,6 +373,39 @@
   }
 }
 
+#value .value-item.value-item--compact {
+  padding: 14px; 
+}
+
+#value .value-item.value-item--compact h4{
+  font-size: 16px;     
+  line-height: 1.25;
+  margin: 0 0 6px;
+}
+
+#value .value-item.value-item--compact .value-pills{
+  gap: 6px;           
+  margin-top: 6px;     
+}
+
+#value .value-item.value-item--compact .value-pill{
+  font-size: 12.25px; 
+  padding: 5px 9px;    
+}
+
+#value .value-item.value-item--compact .value-icon{
+  width: 28px; height: 28px; flex: 0 0 28px;   
+}
+
+#value .value-item.value-item--compact .value-icon svg{
+  width: 16px; height: 16px;                   
+}
+
+@media (max-width:560px){
+  #value .value-item.value-item--compact h4{ font-size: 13.5px; }
+  #value .value-item.value-item--compact .value-pill{ font-size: 12px; }
+}
+		
 </style>
 
 </head>
@@ -593,7 +626,7 @@
     </article>
 
     <!-- Форматы сотрудничества -->
-    <article class="value-item">
+    <article class="value-item value-item--compact">
       <div class="value-icon" aria-hidden="true">
         <!-- handshake -->
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
@@ -615,7 +648,7 @@
     </article>
 
     <!-- Роли -->
-    <article class="value-item">
+    <article class="value-item value-item--compact">
       <div class="value-icon" aria-hidden="true">
         <!-- users -->
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
@@ -891,5 +924,6 @@
 </body>
 
 </html>
+
 
 
