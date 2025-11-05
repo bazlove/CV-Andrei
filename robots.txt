@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /files/*.pdf
+Disallow: /*.pdf$
+
+Sitemap: https://cv.bazlove.com/sitemap.xml
+Host: cv.bazlove.com
+
+Clean-param: utm_source&utm_medium&utm_campaign&utm_term&utm_content&utm_referrer&yclid&gclid&fbclid /
