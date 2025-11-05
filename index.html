@@ -316,11 +316,11 @@
 .rec-quote { position: relative; margin: 0; }
 .rec-quote--box {
   background: #f8f9fa;           
-  border: 2px solid #e5e7eb;     
+  border: 1px solid #e5e7eb;     
   border-radius: 12px;
   padding: 16px 48px 16px 16px;
   overflow: hidden;
-  box-shadow: 0 0 0 1px rgba(0,0,0,.2) inset;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.02) inset;
 }
 .rec-quote--box::before {
   content: "";
@@ -1247,6 +1247,12 @@
   const btnPDF  = document.getElementById('rec-download-pdf');
   const btnClose= overlay?.querySelector('.rec-modal-close');
 
+  const YA_COUNTER_ID = 104073832;
+  const GOALS = {
+    ceo: 'download_ceo_pdf',
+    ad:  'download_ad_pdf'
+  };
+
   function lockScroll(){ document.documentElement.style.overflow = 'hidden'; }
   function unlockScroll(){ document.documentElement.style.overflow = ''; }
 
@@ -1284,6 +1290,13 @@
     unlockScroll();
   }
 
+  btnPDF?.addEventListener('click', function(){
+    const goal = this.dataset.goal || 'download_pdf';
+    if (typeof window.ym === 'function') {
+      window.ym(YA_COUNTER_ID, 'reachGoal', goal);
+    }
+  });
+
   overlay?.addEventListener('click', (e)=>{ if(e.target === overlay) closeModal(); });
   btnClose?.addEventListener('click', closeModal);
   document.addEventListener('keydown', (e)=>{ if(!overlay.hidden && e.key==='Escape') closeModal(); });
@@ -1291,21 +1304,27 @@
   document.querySelectorAll('.rec-more').forEach(link=>{
     link.addEventListener('click', (e)=>{
       e.preventDefault();
-      const id  = link.dataset.id;
+      const id  = link.dataset.id; 
       const pdf = link.dataset.pdf;
       const tpl = document.getElementById('rec-tpl-' + id);
       if(!tpl) return;
+
+      if (btnPDF) {
+        btnPDF.dataset.recId = id || '';
+        btnPDF.dataset.goal  = GOALS[id] || 'download_pdf';
+      }
+
       const html = tpl.content.cloneNode(true);
       openModal(html, pdf);
     });
   });
 })();
-	
 		</script>
 
 	</body>
 
 </html>
+
 
 
 
