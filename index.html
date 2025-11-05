@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
-  <title>Андрей Базлов — COO & Head of Operations / Обо мне • Ценность • Консалтинг</title>
+  <title>Андрей Базлов - COO & Head of Operations / Обо мне • Ценность • Консалтинг</title>
   <meta name="description" content="Операционный лидер с 10+ лет опыта в digital и IT. Масштабировал команды 30+ человек, выстраивал с нуля бизнес-процессы, отвечал за P&L, HR-системы и клиентскую лояльность.>
 	
   <!-- Favicon & Manifest -->
@@ -15,7 +15,7 @@
   <meta name="theme-color" content="#0b2545">
 
   <!-- Open Graph (EN version for previews) -->
-  <meta property="og:title" content="Andrei Bazlov — COO / Head of Operations / Growth & Product Manager">
+  <meta property="og:title" content="Андрей Базлов - COO / Head of Operations / Growth & Product Manager">
   <meta property="og:description" content="Scaled revenue ×5, improved margin to 53%, raised NPS/CSI to 70%, ensured >90% on-time delivery. Download CV (RU/EN).">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://cv.bazlove.com/">
@@ -268,7 +268,120 @@
 
   #about, #achievements{ content-visibility:auto; contain-intrinsic-size:800px; }
   body.dark .small{ color:#b5bcc5; }
-  
+
+/* ===== Recommendations ===== */
+		
+#recommendations { scroll-margin-top: 96px; }
+
+.recs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 12px;
+}
+@media (max-width: 900px) {
+  .recs-grid { grid-template-columns: 1fr; }
+}
+
+.rec {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+  padding: 16px;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+}
+.rec:hover {
+  border-color: var(--success);
+  box-shadow: 0 8px 26px rgba(0,0,0,.08);
+  transform: translateY(-2px);
+}
+
+.rec-face {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.rec-face img {
+  border-radius: 999px;
+  object-fit: cover;
+  flex: 0 0 64px;
+}
+
+.rec-caption { line-height: 1.15; }
+.rec-name    { font-weight: 600; color: var(--ink); }
+.rec-role    { font-size: 12.5px; color: var(--muted); }
+
+.rec-body { margin-top: 8px; display: flex; flex-direction: column; gap: 8px; }
+.rec-quote {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink);
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.rec-sign { color: var(--muted); font-size: 13px; }
+
+.rec-more {
+  align-self: flex-start;
+  font-weight: 600;
+  color: var(--success);
+  text-decoration: none;
+}
+.rec-more:hover { text-decoration: underline; }
+
+/* ===== Modal (namespaced) ===== */
+.rec-modal-overlay[hidden] { display: none; }
+.rec-modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(6,12,20,.65);
+  z-index: 10000;
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px;
+}
+
+.rec-modal {
+  width: min(720px, 92vw);
+  background: var(--card); color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.35);
+  position: relative;
+}
+
+.rec-modal-close {
+  position: absolute; right: 10px; top: 8px;
+  background: transparent; border: 0;
+  font-size: 26px; line-height: 1; color: var(--muted);
+  cursor: pointer;
+}
+
+.rec-modal-content { max-height: 55vh; overflow: auto; padding: 18px; }
+.rec-modal-content h4 { margin: 0 0 8px; font-size: 18px; font-weight: 700; }
+
+.rec-modal-actions {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  padding: 0 18px 18px;
+}
+
+.btn-pdf {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1px solid var(--success);
+  background: transparent;
+  color: var(--success);
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background .2s ease, color .2s ease, box-shadow .2s ease;
+}
+.btn-pdf:hover {
+  background: var(--success);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(16,185,129,.25);
+}
+		
   /* ===== Value ===== */
 
 #achievements.kpi-spacer{ margin-bottom:22px; }      
@@ -541,6 +654,115 @@
       </div>
     </div>
 
+<!-- Recommendations -->
+<section id="recommendations" class="card recs">
+  <h3>Рекомендации</h3>
+
+  <div class="recs-grid">
+    <!-- Карточка 1 -->
+    <article class="rec" itemscope itemtype="https://schema.org/Review">
+      <div class="rec-face">
+        <img
+          src="./images/foto_01.jpg"
+          width="64" height="64"
+          alt="CEO & Founder impulse.guru, Илья Русаков"
+          loading="lazy" decoding="async"
+        />
+        <div class="rec-caption">
+          <div class="rec-name" itemprop="author">Илья Русаков</div>
+          <div class="rec-role">CEO & Founder impulse.guru</div>
+        </div>
+      </div>
+
+      <div class="rec-body">
+        <blockquote class="rec-quote" itemprop="reviewBody">
+          «За время работы Андрей курировал операционную деятельность и управленческую отчётность. Отвечал за бюджетирование, построение и улучшение бизнес-процессов, планирование ресурсов, взаимодействие с ключевыми клиентами, партнёрами и руководителями направлений.»
+        </blockquote>
+        <a
+          href="#"
+          class="rec-more"
+          data-id="ceo"
+          data-pdf="./files/recommendation_ceo_impulse.guru.pdf"
+        >Читать полностью</a>
+      </div>
+
+      <!-- Полный текст для модалки -->
+      <template id="rec-tpl-ceo">
+        <h4>Рекомендация от Генерального директора</h4>
+        <p>За время работы Андрей курировал операционную деятельность и управленческую отчётность. Отвечал за бюджетирование, построение и улучшение бизнес-процессов, планирование ресурсов, взаимодействие с ключевыми клиентами, партнёрами и руководителями направлений.</p>
+        <p>Ключевые результаты, которые Андрей помог достичь компании:</p>
+		  <ul>
+        	<li>Финансовые показатели: рост общей выручки в 5 раз за 2 года и рост маржинальности бизнеса с 44% до 53%.</li>
+			<li>Управленческий учёт: внедрена система сквозного учёта рентабельности по проектам; обеспечена прозрачность план/факт и контроль ключевых показателей.</li>
+			<li>Управление ресурсами: выстроены процессы планирования, приоритизации и согласования решений; установлены цели и показатели KPI для отделов.</li>
+			<li>Масштабирование команды до 30+ человек: сформирована прозрачная HR-система и поэтапное развитие сотрудников от младшего до ведущего специалиста.</li>
+		  </ul>
+		<p>Отмечу личные качества Андрея: надёжность, требовательность к качеству, ясная коммуникация с коллективом и клиентами, умение держать фокус на бизнес-эффекте и принимать обоснованные решения под ограниченные ресурсы.</p>
+        <p class="rec-sign">Подпись: Илья Русаков, CEO & Founder impulse.guru</p>
+      </template>
+    </article>
+
+    <!-- Карточка 2 -->
+    <article class="rec" itemscope itemtype="https://schema.org/Review">
+      <div class="rec-face">
+        <img
+          src="./images/foto_02.jpg"
+          width="64" height="64"
+          alt="Аккаунт-директор impulse.guru, Александр Якушев"
+          loading="lazy" decoding="async"
+        />
+        <div class="rec-caption">
+          <div class="rec-name" itemprop="author">Александр Якушев</div>
+          <div class="rec-role">Аккаунт-директор impulse.guru</div>
+        </div>
+      </div>
+
+      <div class="rec-body">
+        <blockquote class="rec-quote" itemprop="reviewBody">
+          «Андрей отвечал за организацию выполнения проектов от запуска до релиза: планирование бюджета и объёма работ, контроль качества и сроков, распределение нагрузки и координацию межфункциональных команд разных отделов (разработка, дизайн, контент, аналитика, маркетинг, клиентский сервис, SEO).»
+        </blockquote>
+        <a
+          href="#"
+          class="rec-more"
+          data-id="ad"
+          data-pdf="./files/recommendation_ad_impulse.guru.pdf"
+        >Читать полностью</a>
+      </div>
+
+      <template id="rec-tpl-ad">
+        <h4>Рекомендация от Аккаунт-директора</h4>
+        <p>Андрей отвечал за организацию выполнения проектов от запуска до релиза: планирование бюджета и объёма работ, контроль качества и сроков, распределение нагрузки и координацию межфункциональных команд разных отделов (разработка, дизайн, контент, аналитика, маркетинг, клиентский сервис, SEO). Вопросы и риски решались оперативно на уровне ответственных лиц.</p>
+        <p>Как директор по работе с клиентами, ценю в Андрее умение держать слово по срокам, разговаривать с клиентами и сотрудниками на понятном языке, быстро выстраивать порядок в рабочих процессах. Андрей ведёт честную и открытую коммуникацию, способен переводить сложные технические вопросы на язык бизнеса, удерживая доверие и фокус на ценности.</p>
+        <p>Последние несколько лет Андрей занимал позицию операционного директора (COO) и помог компании выполнить следующие стратегические задачи для клиентского сервиса:</p>
+		  <ul>
+        	<li>Внедрить грейдирование, карты компетенций, 1:1, KPI и оценку результатов.</li>
+			<li>Разработать и перейти на новую систему мотивации с учётом грейда.</li>
+			<li>Запустить процесс регулярных допродаж текущим клиентам (план/факт).</li>
+			<li>Повысить клиентскую лояльность: квартальный NPS/CSI вырос с 60% до 70%.</li>
+			<li>Удерживать проблемную дебиторку от всей выручки менее 10%.</li>
+			<li>Удерживать средний срок работы с ключевыми клиентами LT ~12 месяцев.</li>  
+		  </ul>
+		  <p class="rec-sign">Подпись: Александр Якушев, Директор по работе с клиентами impulse.guru.</p>
+      </template>
+    </article>
+  </div>
+</section>
+
+<!-- Modal -->
+<div id="rec-modal" class="rec-modal-overlay" hidden>
+  <div class="rec-modal" role="dialog" aria-modal="true" aria-labelledby="rec-modal-title">
+    <button class="rec-modal-close" aria-label="Закрыть">×</button>
+
+    <div id="rec-modal-content" class="rec-modal-content" tabindex="0">
+      <!-- сюда подставляется содержимое <template> -->
+    </div>
+
+    <div class="rec-modal-actions">
+      <a id="rec-download-pdf" class="btn-pdf" target="_blank" rel="noopener" download>Скачать PDF</a>
+    </div>
+  </div>
+</div>
+	  
 <!-- Value -->
 <div id="value" class="card">
   <h3>Чем могу быть полезен</h3>
@@ -922,8 +1144,64 @@
 
 </script>
 
+<script>
+(function(){
+  const overlay = document.getElementById('rec-modal');
+  const content = document.getElementById('rec-modal-content');
+  const btnPDF  = document.getElementById('rec-download-pdf');
+  const btnClose= overlay?.querySelector('.rec-modal-close');
+
+  function lockScroll(){ document.documentElement.style.overflow = 'hidden'; }
+  function unlockScroll(){ document.documentElement.style.overflow = ''; }
+
+  function openModal(html, pdfHref){
+    if(!overlay || !content) return;
+    // контент
+    content.innerHTML = '';
+    content.appendChild(html);
+    // pdf
+    if (btnPDF) {
+      if (pdfHref) {
+        btnPDF.href = pdfHref;
+        btnPDF.removeAttribute('hidden');
+      } else {
+        btnPDF.setAttribute('hidden','');
+      }
+    }
+    // показать
+    overlay.hidden = false;
+    lockScroll();
+    setTimeout(()=>content.focus(), 0);
+  }
+
+  function closeModal(){
+    overlay.hidden = true;
+    unlockScroll();
+  }
+
+  // Закрытие по клику на фон / крестик / Esc
+  overlay?.addEventListener('click', (e)=>{ if(e.target === overlay) closeModal(); });
+  btnClose?.addEventListener('click', closeModal);
+  document.addEventListener('keydown', (e)=>{ if(!overlay.hidden && e.key==='Escape') closeModal(); });
+
+  // Открытие из карточек
+  document.querySelectorAll('.rec-more').forEach(link=>{
+    link.addEventListener('click', (e)=>{
+      e.preventDefault();
+      const id  = link.dataset.id;
+      const pdf = link.dataset.pdf;
+      const tpl = document.getElementById('rec-tpl-' + id);
+      if(!tpl) return;
+      const html = tpl.content.cloneNode(true);
+      openModal(html, pdf);
+    });
+  });
+})();
+</script>
+
 </body>
 
 </html>
+
 
 
