@@ -405,6 +405,7 @@
 
 .rec-quote { position: relative; margin: 0; }
 .rec-quote--box {
+  position: relative;
   background: #f8f9fa;           
   border: 1px solid #e5e7eb;     
   border-radius: 12px;
@@ -418,10 +419,12 @@
   width: 2px; background: var(--success);
   border-radius: 12px 0 0 12px;
 }
-.rec-quote--box:hover{
-  box-shadow:
-    0 0 0 0.5px rgba(2, 6, 23, .04),
-    0 4px 10px rgba(2, 6, 23, .04);
+@media (prefers-color-scheme: light) {
+  .rec-quote--box:hover{
+    box-shadow:
+      0 0 0 1px rgba(2, 6, 23, .05),
+      0 4px 10px rgba(2, 6, 23, .05);
+  }
 }
 
 .rec-quote .rec-mark{
@@ -1360,5 +1363,6 @@
 	</body>
 
 </html>
+
 
 
