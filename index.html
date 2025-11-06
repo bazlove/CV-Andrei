@@ -3,6 +3,83 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Yandex.Metrika -->
+<link rel="preconnect" href="https://mc.yandex.ru">
+<script>
+  (function(m,e,t,r,i,k,a){
+      m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+      m[i].l=1*new Date();
+      for (var j=0; j<document.scripts.length; j++) { if (document.scripts[j].src === r) return; }
+      k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a);
+  })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=104073832', 'ym');
+
+  ym(104073832, 'init', {
+    ssr: true,
+    webvisor: true,
+    clickmap: true,
+    trackLinks: true,
+    accurateTrackBounce: true,
+    ecommerce: "dataLayer"
+  });
+
+  ym(104073832, 'params', { consent_state: 'forced_start' });
+
+  (function(){
+    var CONFIG = {
+      banner:  '[data-consent="banner"], .cookie-banner, #cookie-banner',
+      accept:  '[data-consent="accept"], .cookie-accept, #acceptCookies',
+      decline: '[data-consent="decline"], .cookie-decline, #declineCookies',
+      close:   '[data-consent="close"], .cookie-close, #closeCookies'
+    };
+    function q(sel){ try { return document.querySelector(sel); } catch(e){ return null; } }
+    var bannerEl, shownAt = 0, decided = false;
+
+    function markShown(){
+      if (bannerEl || decided) return;
+      bannerEl = q(CONFIG.banner);
+      if (!bannerEl) return;
+      shownAt = performance.now();
+      ym(104073832, 'reachGoal', 'consent_shown');
+      ym(104073832, 'params', { consent_banner: 'shown' });
+    }
+    if (document.readyState !== 'loading') markShown();
+    document.addEventListener('DOMContentLoaded', markShown);
+    new MutationObserver(markShown).observe(document.documentElement, {childList:true, subtree:true});
+
+    document.addEventListener('click', function(e){
+      var a = e.target.closest(CONFIG.accept);
+      var d = e.target.closest(CONFIG.decline);
+      var c = e.target.closest(CONFIG.close);
+      if (a || d || c){
+        decided = true;
+        var dur = shownAt ? Math.round(performance.now() - shownAt) : null;
+        if (a){
+          ym(104073832, 'params', { consent_state: 'accept', consent_time_ms: dur });
+          ym(104073832, 'reachGoal', 'consent_accept');
+        } else if (d){
+          ym(104073832, 'params', { consent_state: 'decline', consent_time_ms: dur });
+          ym(104073832, 'reachGoal', 'consent_decline');
+        } else {
+          ym(104073832, 'params', { consent_state: 'close', consent_time_ms: dur });
+          ym(104073832, 'reachGoal', 'consent_close');
+        }
+      }
+    }, { passive: true });
+
+    window.addEventListener('pagehide', function(){
+      if (bannerEl && !decided){
+        var dur = shownAt ? Math.round(performance.now() - shownAt) : null;
+        ym(104073832, 'params', { consent_state: 'ignore', consent_time_ms: dur });
+        ym(104073832, 'reachGoal', 'consent_ignore');
+      }
+    });
+  })();
+</script>
+<noscript>
+  <div><img src="https://mc.yandex.ru/watch/104073832" style="position:absolute; left:-9999px;" alt=""></div>
+</noscript>
+<!-- /Yandex.Metrika -->	
   
   <link rel="canonical" href="https://cv.bazlove.com/">
   <title>Андрей Базлов - COO & Head of Operations / Обо мне • Ценность • Консалтинг</title>
@@ -1174,84 +1251,6 @@
       calc();
     })();
   </script>
-  
-<!-- Consent + Yandex.Metrika (load always, init on consent) -->
-
-<script>
-(function () {
-  const KEY = 'consent_analytics';
-  const METRIKA_ID = 104073832;                 // ID
-  const overlay = document.getElementById('consent-overlay');
-  const modal   = document.getElementById('consent-modal');
-  const btnYes  = document.getElementById('consent-accept');
-  const btnNo   = document.getElementById('consent-reject');
-
-  window.YM_COUNTER_ID = METRIKA_ID;
-
-  (function(m,e,t,r,i,k,a){
-    m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-    m[i].l=1*new Date();
-    k=e.createElement(t),a=e.getElementsByTagName(t)[0];
-    k.async=1;k.src=r;a.parentNode.insertBefore(k,a);
-  })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
-
-  function initYMOnce(){
-    if (window.__ymAlreadyInit) return;
-    window.__ymAlreadyInit = true;
-    try {
-      ym(METRIKA_ID, 'init', {
-        clickmap:true,
-        trackLinks:true,
-        accurateTrackBounce:true,
-        defer:true
-      });
-      ym(METRIKA_ID, 'hit', location.pathname, { callback: () => console.debug('[YM] hit sent') });
-      console.debug('[YM] init ok', METRIKA_ID);
-    } catch(e) {
-      console.warn('[YM] init error', e);
-    }
-  }
-
-  const lockScroll   = () => { document.documentElement.style.overflow = 'hidden'; };
-  const unlockScroll = () => { document.documentElement.style.overflow = ''; };
-  function focusTrap(e){
-    const focusable = modal.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])');
-    if (!focusable.length) return;
-    const first = focusable[0], last = focusable[focusable.length - 1];
-    if (e.key === 'Tab') {
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-    }
-    if (e.key === 'Escape') { reject(); }
-  }
-  function hideModal(){ if (!overlay) return; overlay.style.display='none'; overlay.removeEventListener('keydown',focusTrap); unlockScroll(); }
-  function showModal(){ overlay.style.display='flex';  lockScroll(); overlay.addEventListener('keydown',focusTrap); setTimeout(()=>btnYes&&btnYes.focus(),0); }
-
-  function accept(){
-    localStorage.setItem(KEY,'yes');
-    hideModal();
-    initYMOnce();                                
-    try { ym(METRIKA_ID,'reachGoal','consent_yes'); } catch(e){}
-    var nos = document.createElement('noscript');
-    nos.innerHTML = '<div><img src="https://mc.yandex.ru/watch/'+ METRIKA_ID +'" style="position:absolute; left:-9999px;" alt=""></div>';
-    document.body.appendChild(nos);
-  }
-  function reject(){
-    localStorage.setItem(KEY,'no');
-    hideModal();                                 
-    try { ym(METRIKA_ID,'reachGoal','consent_no'); } catch(e){}
-  }
-
-  btnYes && (btnYes.onclick = accept);
-  btnNo  && (btnNo.onclick  = reject);
-
-  const val = localStorage.getItem(KEY);
-  if (val === 'yes') { hideModal(); initYMOnce(); }
-  else if (val === 'no') { hideModal(); }
-  else { showModal(); }
-})();
-
-</script>
 
 <script>
 	
@@ -1338,6 +1337,7 @@
 	</body>
 
 </html>
+
 
 
 
