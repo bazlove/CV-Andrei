@@ -23,76 +23,97 @@
     ecommerce: "dataLayer"
   });
 
-  ym(104073832, 'params', { consent_state: 'forced_start' });
+  // ---- helpers: хранение согласия ----
+  function setConsentChoice(val, days){
+    try { localStorage.setItem('consent_choice', val); } catch(e){}
+    try {
+      var d = new Date(); d.setTime(d.getTime() + (days*24*60*60*1000));
+      document.cookie = 'consent_choice='+encodeURIComponent(val)+'; expires='+d.toUTCString()+'; path=/; SameSite=Lax';
+    } catch(e){}
+  }
+  function getConsentChoice(){
+    try { var v = localStorage.getItem('consent_choice'); if(v) return v; } catch(e){}
+    try { var m = document.cookie.match(/(?:^|;\s*)consent_choice=([^;]*)/); return m ? decodeURIComponent(m[1]) : null; } catch(e){ return null; }
+  }
 
   (function(){
     var CONFIG = {
-  		banner:  '#consent-overlay',     
-  		accept:  '#consent-accept',      
-  		decline: '#consent-reject',      
-  		close:   '#consent-close, #consent-overlay [data-consent="close"]'
-			};
+      banner:  '#consent-overlay',
+      accept:  '#consent-accept',
+      decline: '#consent-reject',
+      close:   '#consent-close'
+    };
 
-    function q(sel){ try { return document.querySelector(sel); } catch(e){ return null; } }
-    var bannerEl, shownAt = 0, decided = false;
+    function $(sel){ try { return document.querySelector(sel); } catch(e){ return null; } }
+    var overlay, shownAt = 0, shownTracked = false, decided = false;
 
-    function markShown(){
-      if (bannerEl || decided) return;
-      bannerEl = q(CONFIG.banner);
-      if (!bannerEl) return;
-      shownAt = performance.now();
-      ym(104073832, 'reachGoal', 'consent_shown');
-      ym(104073832, 'params', { consent_banner: 'shown' });
-    }
-    if (document.readyState !== 'loading') markShown();
-    document.addEventListener('DOMContentLoaded', markShown);
-    new MutationObserver(markShown).observe(document.documentElement, {childList:true, subtree:true});
-
-    document.addEventListener('click', function(e){
-      var a = e.target.closest(CONFIG.accept);
-      var d = e.target.closest(CONFIG.decline);
-      var c = e.target.closest(CONFIG.close);
-      if (a || d || c){
-        decided = true;
-        var dur = shownAt ? Math.round(performance.now() - shownAt) : null;
-        if (a){
-          ym(104073832, 'params', { consent_state: 'accept', consent_time_ms: dur });
-          ym(104073832, 'reachGoal', 'consent_accept');
-        } else if (d){
-          ym(104073832, 'params', { consent_state: 'decline', consent_time_ms: dur });
-          ym(104073832, 'reachGoal', 'consent_decline');
-        } else {
-          ym(104073832, 'params', { consent_state: 'close', consent_time_ms: dur });
-          ym(104073832, 'reachGoal', 'consent_close');
-        }
+    function showBannerIfNeeded(){
+      overlay = $(CONFIG.banner);
+      if (!overlay) return;
+      var choice = getConsentChoice();
+      if (choice){
+        ym(104073832, 'params', { consent_state: choice });
+        overlay.setAttribute('hidden','');
+        return;
       }
-    }, { passive: true });
+      
+      overlay.removeAttribute('hidden');
+      if (!shownTracked){
+        shownTracked = true;
+        shownAt = performance.now();
+        ym(104073832, 'reachGoal', 'consent_shown');
+        ym(104073832, 'params', { consent_banner: 'shown' });
+      }
+    }
+
+    function decide(val){
+      decided = true;
+      setConsentChoice(val, 180); // храним 180 дней
+      var dur = shownAt ? Math.round(performance.now() - shownAt) : null;
+      ym(104073832, 'params', { consent_state: val, consent_time_ms: dur });
+      ym(104073832, 'reachGoal', 'consent_'+val); // consent_accept | consent_decline | consent_close
+      if (overlay) overlay.setAttribute('hidden','');
+    }
+
+    if (document.readyState !== 'loading') showBannerIfNeeded();
+    document.addEventListener('DOMContentLoaded', showBannerIfNeeded);
+
+    function bindDecisionHandlers(){
+      var acc = $(CONFIG.accept);
+      var dec = $(CONFIG.decline);
+      var cls = $(CONFIG.close);
+
+      function onClickAccept(e){ decide('accept'); }
+      function onClickDecline(e){ decide('decline'); }
+      function onClickClose(e){ decide('close'); }
+
+      acc && acc.addEventListener('click', onClickAccept, { passive: true });
+      acc && acc.addEventListener('touchend', onClickAccept, { passive: true });
+
+      dec && dec.addEventListener('click', onClickDecline, { passive: true });
+      dec && dec.addEventListener('touchend', onClickDecline, { passive: true });
+
+      cls && cls.addEventListener('click', onClickClose, { passive: true });
+      cls && cls.addEventListener('touchend', onClickClose, { passive: true });
+    }
+    if (document.readyState !== 'loading') bindDecisionHandlers();
+    document.addEventListener('DOMContentLoaded', bindDecisionHandlers);
 
     window.addEventListener('pagehide', function(){
-      if (bannerEl && !decided){
+      if (shownTracked && !decided){
         var dur = shownAt ? Math.round(performance.now() - shownAt) : null;
         ym(104073832, 'params', { consent_state: 'ignore', consent_time_ms: dur });
         ym(104073832, 'reachGoal', 'consent_ignore');
       }
     });
   })();
+
+  ym(104073832, 'params', { consent_state: 'forced_start' });
 </script>
-	
-	<noscript>
+<noscript>
   <div><img src="https://mc.yandex.ru/watch/104073832" style="position:absolute; left:-9999px;" alt=""></div>
 </noscript>
 <!-- /Yandex.Metrika -->
-
-	<script>
-  document.addEventListener('click', function(e){
-    const accept = e.target.closest('#consent-accept');
-    const reject = e.target.closest('#consent-reject');
-    if (accept || reject) {
-      const ov = document.getElementById('consent-overlay');
-      if (ov) ov.setAttribute('hidden', '');
-    }
-  }, { passive: true });
-</script>
   
   <link rel="canonical" href="https://cv.bazlove.com/">
   <title>Андрей Базлов - COO & Head of Operations / Обо мне • Ценность • Консалтинг</title>
@@ -713,15 +734,13 @@
   #value .value-item.value-item--compact .value-pill{ font-size: 12px; }
 }
 
-[hidden] { display: none !important; }
-
 #consent-overlay {
   z-index: 2147483647 !important;
   pointer-events: auto;            
 }
-
 #rec-modal[hidden] { display: none !important; }
 #consent-overlay * { pointer-events: auto; }
+[hidden] { display: none !important; }
 	
 </style>
 
@@ -730,7 +749,7 @@
 <body id="top">
   
 <!-- Consent Modal -->
-<div id="consent-overlay" role="dialog" aria-modal="true" aria-labelledby="consent-title"
+<div id="consent-overlay" role="dialog" aria-modal="true" aria-labelledby="consent-title" hidden
      style="position:fixed; inset:0; background:rgba(6,12,20,.65); z-index:99999; display:flex; align-items:center; justify-content:center;">
   <div id="consent-modal" style="max-width:720px; width:92%; background:#0b1220; color:#e6ebf2; border:1px solid #27324a; border-radius:14px; padding:20px; box-shadow:0 12px 40px rgba(0,0,0,.4)">
     <h2 id="consent-title" style="margin:0 0 8px 0; font:600 18px/1.4 system-ui,Segoe UI,Roboto,Arial,sans-serif;">Файлы cookie и аналитика</h2>
@@ -1363,6 +1382,7 @@
 	</body>
 
 </html>
+
 
 
 
