@@ -291,17 +291,6 @@
   input:checked + .slider{ background:var(--success); border-color:var(--success) }
   input:checked + .slider::after{ transform:translateX(20px) }
 
-  /* Sticky CTA */
-  .sticky-cta{
-    position:fixed; left:0; right:0; bottom:0; background:var(--card);
-    border-top:1px solid var(--line); padding:10px 12px; display:none; gap:10px; z-index:50;
-  }
-  .sticky-cta .btn{ flex:1; justify-content:center }
-  @media (max-width:520px){
-    .sticky-cta{ display:flex; }
-    .wrap{ padding-bottom:96px; }
-  }
-
   /* =========================
      Mobile & UX enhancements
      ========================= */
@@ -365,13 +354,6 @@
     .kpi-grid::-webkit-scrollbar{ display:none; }
     /* gradients removed */
     .kpi-grid::before, .kpi-grid::after{ display:none !important; content:none !important; }
-  }
-
-  /* Sticky CTA buttons stacked */
-  @media (max-width:520px){
-    .sticky-cta{ flex-direction:column; padding:12px; gap:10px; }
-    .sticky-cta .btn{ font-size:15px; min-height:44px; padding:12px 14px; }
-    .wrap{ padding-bottom:132px; }
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -931,7 +913,8 @@
 
       <template id="rec-tpl-ceo">
         <h4>Рекомендация от Генерального директора</h4>
-        <p>За время работы Андрей курировал операционную деятельность и управленческую отчётность. Отвечал за бюджетирование, построение и улучшение бизнес-процессов, планирование ресурсов, взаимодействие с ключевыми клиентами, партнёрами и руководителями направлений.</p>
+        <p>За восемь лет в компании Андрей последовательно вырос от специалиста по интернет-маркетингу до операционного директора, что подтверждает его готовность брать на себя ответственность и совместно достигать измеримых результатов.</p>
+		<p>За время работы Андрей курировал операционную деятельность и управленческую отчётность. Отвечал за бюджетирование, построение и улучшение бизнес-процессов, планирование ресурсов, взаимодействие с ключевыми клиентами, партнёрами и руководителями направлений.</p>
         <p>Ключевые результаты, которые Андрей помог достичь компании:</p>
 		  <ul>
         	<li>Финансовые показатели: рост общей выручки в 5 раз за 2 года и рост маржинальности бизнеса с 44% до 53%.</li>
@@ -1173,11 +1156,6 @@
     <a href="./privacy.html" class="footer-link" target="_blank" rel="noopener noreferrer">Политика конфиденциальности</a>.
   </div>
     </footer>
-  
-  <div class="sticky-cta" aria-label="Быстрые действия">
-    <a id="sticky-ru" class="btn" href="#" download target="_blank" rel="noopener">⬇ PDF RU</a>
-    <a id="sticky-en" class="btn secondary" href="#" download target="_blank" rel="noopener">⬇ PDF EN</a>
-  </div>
 
   <script>
     (function(){
@@ -1213,8 +1191,10 @@
       const fru = document.getElementById('ftr-ru'), fen = document.getElementById('ftr-en');
       if(fru) fru.href = ruUrl; if(fen) fen.href = enUrl;
 
-      const sru = document.getElementById('sticky-ru'), sen = document.getElementById('sticky-en');
-      sru.href = ruUrl; sen.href = enUrl;
+      const sru = document.getElementById('sticky-ru');
+		const sen = document.getElementById('sticky-en');
+		if (sru) sru.href = ruUrl;
+		if (sen) sen.href = enUrl;
 
       [ruBtn, enBtn, fru, fen, sru, sen].forEach(el=>{
         if(el){ el.setAttribute('target','_blank'); el.setAttribute('rel','noopener'); }
@@ -1398,6 +1378,7 @@
 	</body>
 
 </html>
+
 
 
 
