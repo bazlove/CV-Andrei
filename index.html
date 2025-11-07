@@ -413,7 +413,10 @@
   pointer-events: none; user-select: none;
 }
 @media (prefers-color-scheme: dark) {
-  .rec-quote--box { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.12);
+  .rec-quote--box {
+    background: rgba(255,255,255,.04);
+    border-color: rgba(255,255,255,.12);
+  }
   .rec-quote .rec-mark { opacity: .6; }
 }
 @media (prefers-color-scheme: dark){
@@ -468,14 +471,14 @@
 
 /* ===== Modal (namespaced) ===== */
 .rec-modal-overlay[hidden] { display: none; }
-.rec-modal-overlay {
+.rec-modal-overlay, #consent-overlay {
   position: fixed; inset: 0;
   background: rgba(6,12,20,.65);
   z-index: 10000;
   display: flex; align-items: center; justify-content: center;
   padding: 16px;
+  min-height: 100dvh;
 }
-
 .rec-modal {
   width: min(720px, 92vw);
   background: var(--card); color: var(--ink);
@@ -776,7 +779,14 @@
     border-radius:16px 16px 0 0; margin:0;
   }
 }
-	
+
+@supports not (content-visibility: auto){
+  #about, #achievements{
+    content-visibility: visible;
+    contain-intrinsic-size: auto;
+  }
+}
+		
 </style>
 
 </head>
@@ -1412,3 +1422,4 @@ window.YM_COUNTER_ID = 104073832;
 	</body>
 
 </html>
+
