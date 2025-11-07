@@ -733,6 +733,25 @@
   #value .value-item.value-item--compact .value-pill{ font-size: 12px; }
 }
 
+@media (max-width: 560px){
+  footer .cols{ row-gap: 16px; }
+  footer .cols > div > strong{
+    display:block;
+    margin: 16px 0 12px;   /* отступ сверху и снизу */
+    line-height: 1.25;
+  }
+  footer .cols > div > a{
+    display:inline-block;      /* остаются в строку с разделителем ·, но зона клика больше */
+    padding: 8px 0;            /* вертикальный паддинг */
+    min-height: 40px;          /* близко к гайдлайну 44px */
+    line-height: 1.35;
+  }
+  footer .small{
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+}
+	
 #consent-overlay {
   z-index: 2147483647 !important;
   pointer-events: auto;            
@@ -1379,6 +1398,7 @@
 	</body>
 
 </html>
+
 
 
 
