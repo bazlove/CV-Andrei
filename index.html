@@ -529,7 +529,7 @@
 }
 
 .rec-modal-actions {
-  display: none; gap: 10px; flex-wrap: wrap;
+  position: static; gap: 10px; flex-wrap: wrap;
   padding: 0 18px 18px;
   margin-top: 28px;
 }
@@ -1002,13 +1002,10 @@
 <div id="rec-modal" class="rec-modal-overlay" hidden>
   <div class="rec-modal" role="dialog" aria-modal="true" aria-labelledby="rec-modal-title">
     <button class="rec-modal-close" aria-label="Закрыть">×</button>
-
-    <div id="rec-modal-content" class="rec-modal-content" tabindex="0">
-      <!-- сюда подставляется содержимое <template> -->
+    <div id="rec-modal-content" class="rec-modal-content" tabindex="-1">
     </div>
-
     <div class="rec-modal-actions">
-      <a id="rec-download-pdf" class="btn-pdf" target="_blank" rel="noopener" download>Скачать PDF</a>
+	  <a id="rec-download-pdf" class="btn-pdf" href="" target="_blank" rel="noopener" download>Скачать PDF</a>
     </div>
   </div>
 </div>
@@ -1398,6 +1395,7 @@
 	</body>
 
 </html>
+
 
 
 
