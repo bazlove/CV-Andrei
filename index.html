@@ -88,6 +88,22 @@
   if (document.readyState!=='loading') ensureBanner();
   else document.addEventListener('DOMContentLoaded', ensureBanner);
 })();
+  (function(){
+    var toggle = document.getElementById('langToggle');
+    if (!toggle) return;
+    var path = window.location.pathname || '/';
+    // Считаем, что английская версия лежит на /en/ или /en
+    var isEn = path === '/en' || path.indexOf('/en/') === 0;
+    toggle.checked = isEn;
+    toggle.addEventListener('change', function(){
+      var targetLang = toggle.checked ? 'en' : 'ru';
+      try {
+        localStorage.setItem('preferredLang', targetLang);
+      } catch(e) {}
+      var targetUrl = targetLang === 'en' ? '/en/' : '/';
+      window.location.href = targetUrl;
+    });
+  })();
 </script>
   
   <link rel="canonical" href="https://cv.bazlove.com/">
@@ -1422,6 +1438,7 @@ window.YM_COUNTER_ID = 104073832;
 	</body>
 
 </html>
+
 
 
 
