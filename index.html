@@ -775,7 +775,8 @@ body.dark .rec-modal-content::-webkit-scrollbar-track{ background:rgba(255,255,2
     contain-intrinsic-size: auto;
   }
 }
-		
+.switch.switch--lang .ico { font-size: 12px; }
+	
 </style>
 
 </head>
@@ -815,7 +816,17 @@ body.dark .rec-modal-content::-webkit-scrollbar-track{ background:rgba(255,255,2
         </div>
 
         <div class="contacts">
-          <div class="row"><span class="ico">📍</span><span>Serbia</span></div>
+          <div class="row">
+  			<span class="ico">📍</span>
+  				<span>Serbia</span>
+  <!-- switch RU/EN -->
+  <label class="switch switch--lang" aria-label="Language switcher">
+    <span class="ico">RU</span>
+    <input type="checkbox" id="langToggle">
+    <span class="slider"></span>
+    <span class="ico">EN</span>
+  </label>
+</div>
           <div class="row">
             <span class="ico">✉️</span>
             <a id="emailLink" href="mailto:io.bazlov@gmail.com">io.bazlov@gmail.com</a>
@@ -1411,6 +1422,7 @@ window.YM_COUNTER_ID = 104073832;
 	</body>
 
 </html>
+
 
 
 
