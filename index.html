@@ -88,19 +88,32 @@
   if (document.readyState!=='loading') ensureBanner();
   else document.addEventListener('DOMContentLoaded', ensureBanner);
 })();
-  (function(){
+   (function(){
     var toggle = document.getElementById('langToggle');
-    if (!toggle) return;
+    var label  = document.querySelector('.switch--lang');
+    if (!toggle || !label) return;
+    var ruEl = label.querySelector('[data-lang="ru"]');
+    var enEl = label.querySelector('[data-lang="en"]');
+    function applyActive(isEn){
+      ruEl.classList.remove('is-active');
+      enEl.classList.remove('is-active');
+      if(isEn){
+        enEl.classList.add('is-active');
+      }else{
+        ruEl.classList.add('is-active');
+      }
+    }
     var path = window.location.pathname || '/';
-    // Считаем, что английская версия лежит на /en/ или /en
-    var isEn = path === '/en' || path.indexOf('/en/') === 0;
+    var isEn = (path === '/en' || path.indexOf('/en/') === 0);
     toggle.checked = isEn;
+    applyActive(isEn);
     toggle.addEventListener('change', function(){
-      var targetLang = toggle.checked ? 'en' : 'ru';
-      try {
-        localStorage.setItem('preferredLang', targetLang);
-      } catch(e) {}
-      var targetUrl = targetLang === 'en' ? '/en/' : '/';
+      var isEn = toggle.checked;
+      applyActive(isEn);
+      try{
+        localStorage.setItem('preferredLang', isEn ? 'en' : 'ru');
+      }catch(e){}
+      var targetUrl = isEn ? '/en/' : '/';
       window.location.href = targetUrl;
     });
   })();
@@ -791,8 +804,19 @@ body.dark .rec-modal-content::-webkit-scrollbar-track{ background:rgba(255,255,2
     contain-intrinsic-size: auto;
   }
 }
-.switch.switch--lang .ico { font-size: 12px; }
-	
+
+.switch.switch--lang .ico{
+  font-size: 12px;
+  opacity: .6;
+  transition: color .15s ease, font-weight .15s ease, opacity .15s ease;
+}
+
+.switch.switch--lang .ico.is-active{
+  font-weight: 700;
+  color: var(--success);
+  opacity: 1;
+}
+
 </style>
 
 </head>
@@ -1438,9 +1462,3 @@ window.YM_COUNTER_ID = 104073832;
 	</body>
 
 </html>
-
-
-
-
-
-
