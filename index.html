@@ -87,35 +87,48 @@
 
   if (document.readyState!=='loading') ensureBanner();
   else document.addEventListener('DOMContentLoaded', ensureBanner);
-})();
-   (function(){
+
+// === switcher ru/en ===
+  function initLangSwitch(){
     var toggle = document.getElementById('langToggle');
     var label  = document.querySelector('.switch--lang');
     if (!toggle || !label) return;
+
     var ruEl = label.querySelector('[data-lang="ru"]');
     var enEl = label.querySelector('[data-lang="en"]');
+    if (!ruEl || !enEl) return;
+
     function applyActive(isEn){
       ruEl.classList.remove('is-active');
       enEl.classList.remove('is-active');
-      if(isEn){
+      if (isEn) {
         enEl.classList.add('is-active');
-      }else{
+      } else {
         ruEl.classList.add('is-active');
       }
     }
+
     var path = window.location.pathname || '/';
     var isEn = (path === '/en' || path.indexOf('/en/') === 0);
+
     toggle.checked = isEn;
     applyActive(isEn);
+
     toggle.addEventListener('change', function(){
       var isEn = toggle.checked;
       applyActive(isEn);
-      try{
+      try {
         localStorage.setItem('preferredLang', isEn ? 'en' : 'ru');
-      }catch(e){}
+      } catch(e){}
+
       var targetUrl = isEn ? '/en/' : '/';
       window.location.href = targetUrl;
     });
+  }
+
+  if (document.readyState !== 'loading') initLangSwitch();
+  else document.addEventListener('DOMContentLoaded', initLangSwitch);
+	
   })();
 </script>
   
@@ -804,19 +817,16 @@ body.dark .rec-modal-content::-webkit-scrollbar-track{ background:rgba(255,255,2
     contain-intrinsic-size: auto;
   }
 }
-
 .switch.switch--lang .ico{
   font-size: 12px;
   opacity: .6;
   transition: color .15s ease, font-weight .15s ease, opacity .15s ease;
 }
-
 .switch.switch--lang .ico.is-active{
-  font-weight: 700;
+  font-weight: 600;
   color: var(--success);
   opacity: 1;
 }
-
 </style>
 
 </head>
@@ -861,10 +871,10 @@ body.dark .rec-modal-content::-webkit-scrollbar-track{ background:rgba(255,255,2
   				<span>Serbia</span>
   <!-- switch RU/EN -->
   <label class="switch switch--lang" aria-label="Language switcher">
-    <span class="ico">RU</span>
+    <span class="ico" data-lang="ru">RU</span>
     <input type="checkbox" id="langToggle">
     <span class="slider"></span>
-    <span class="ico">EN</span>
+    <span class="ico" data-lang="en">EN</span>
   </label>
 </div>
           <div class="row">
@@ -1462,3 +1472,4 @@ window.YM_COUNTER_ID = 104073832;
 	</body>
 
 </html>
+
