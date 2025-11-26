@@ -280,7 +280,7 @@
   .kpi .ico svg{ width:28px; height:28px; overflow:visible; opacity:.95 }
 
   .kpi .tip{
-    position:absolute; left:16px; right:16px; bottom:100%; transform:translateY(-8px);
+    z-index: 2; position:absolute; left:16px; right:16px; bottom:100%; transform:translateY(-8px);
     background:var(--card); color:var(--ink); border:1px solid var(--line); border-radius:10px; padding:8px 10px;
     font-size:12px; box-shadow:0 8px 20px rgba(0,0,0,.08); opacity:0; pointer-events:none; transition:opacity .15s, transform .15s;
   }
@@ -288,6 +288,11 @@
   .kpi .tip:after{
     content:""; position:absolute; bottom:-6px; left:20px; width:10px; height:10px;
     background:var(--card); border-left:1px solid var(--line); border-bottom:1px solid var(--line); transform:rotate(45deg);
+  }
+
+  #achievements{
+  	position: relative;
+  	z-index: 1;
   }
 
   #download, #about, #achievements, #value { scroll-margin-top: 96px; }
@@ -1476,6 +1481,7 @@ window.YM_COUNTER_ID = 104073832;
 	</body>
 
 </html>
+
 
 
 
