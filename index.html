@@ -777,6 +777,212 @@ body.dark .rec-modal-content::-webkit-scrollbar-track{ background:rgba(255,255,2
   flex:none; display:block;          /* не даём SVG «расти» */
   max-width:100%; max-height:100%;
 }
+
+#achievements.kpi-spacer{ margin-bottom:22px; }      
+#achievements.kpi-spacer + #value{ margin-top:0; }
+
+#value{ scroll-margin-top:96px; }
+
+#value .value-intro{
+  color:var(--muted);
+  max-width:none;                 
+  margin:8px 0 16px; /* увеличил отступ снизу для лучшего разделения */
+  line-height:1.6;
+  overflow:visible;
+  word-break:normal;
+  overflow-wrap:anywhere;
+  hyphens:auto;
+}
+
+#value .value-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;                       
+}
+
+#value .value-item{
+  display:flex; 
+  align-items:flex-start; 
+  gap:12px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:12px;             
+  padding:16px;                   
+  transition:border-color .2s, box-shadow .2s, transform .2s, background .2s;
+}
+
+#value .value-item:hover,
+#value .value-item:focus-within{
+  border-color:var(--success);
+  box-shadow:var(--glow);
+  transform:translateY(-2px);
+}
+
+#value .value-icon{
+  width:32px; 
+  height:32px; 
+  flex:0 0 32px;
+  display:flex; 
+  align-items:center; 
+  justify-content:center;
+  border-radius:10px;
+  background:color-mix(in oklab, var(--success) 10%, transparent);
+  color:var(--success);
+  transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+  will-change:transform;
+  aspect-ratio:1/1;
+}
+
+#value .value-icon svg{
+  width:18px; 
+  height:18px;
+  flex:none; 
+  display:block;
+  max-width:100%; 
+  max-height:100%;
+  transition:transform .18s ease;
+  transform-origin:50% 50%;
+}
+
+#value .value-item:hover .value-icon,
+#value .value-item:focus-within .value-icon{
+  transform:translateY(-2px) scale(1.03);
+  background:color-mix(in oklab, var(--success) 16%, transparent);
+  box-shadow:0 6px 14px rgba(0,0,0,.08);
+}
+
+#value .value-item:active .value-icon{ 
+  transform:translateY(0) scale(0.98); 
+}
+
+#value .value-item:hover .value-icon svg,
+#value .value-item:focus-within .value-icon svg{ 
+  transform:rotate(-2deg); 
+}
+
+#value .value-item h4{
+  margin:0 0 8px;
+  font-size:16px;
+  line-height:1.25;               
+}
+
+#value .value-list{
+  padding-left:20px;
+  margin:4px 0 0;
+  font-size:14.5px;               
+  line-height:1.6;
+}
+
+#value .value-list li{ 
+  margin:4px 0; 
+}
+
+#value .value-list li::marker{
+  color:var(--success);
+  font-size:1.05em;
+}
+
+#value .value-pills{ 
+  display:flex; 
+  flex-wrap:wrap; 
+  gap:8px; 
+  margin-top:8px; 
+}
+
+#value .value-pill{
+  border:1px solid var(--line);
+  background:color-mix(in oklab, var(--bg) 96%, transparent);
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:13.5px;
+  color:var(--muted);
+  transition:border-color .2s, background .2s, color .2s;
+}
+
+/* Добавил hover для pills */
+#value .value-item:hover .value-pill,
+#value .value-item:focus-within .value-pill{
+  border-color:var(--success);
+  color:var(--text);
+}
+
+/* Компактные карточки (форматы и роли) */
+#value .value-item.value-item--compact {
+  padding: 14px; 
+}
+
+#value .value-item.value-item--compact h4{
+  font-size: 16px;     
+  line-height: 1.25;
+  margin: 0 0 6px;
+}
+
+#value .value-item.value-item--compact .value-pills{
+  gap: 6px;           
+  margin-top: 6px;     
+}
+
+#value .value-item.value-item--compact .value-pill{
+  font-size: 12.25px; 
+  padding: 5px 9px;    
+}
+
+#value .value-item.value-item--compact .value-icon{
+  width: 28px; 
+  height: 28px; 
+  flex: 0 0 28px;   
+}
+
+#value .value-item.value-item--compact .value-icon svg{
+  width: 16px; 
+  height: 16px;                   
+}
+
+/* Tablet */
+@media (max-width:900px){
+  #value .value-grid{ 
+    grid-template-columns:repeat(2,1fr); 
+  }
+}
+
+/* Mobile */
+@media (max-width:560px){
+  #value{ 
+    scroll-margin-top:72px; 
+  }
+  
+  #value .value-grid{ 
+    grid-template-columns:1fr; 
+    gap:12px; 
+  }
+  
+  #value .value-item{ 
+    padding:14px; 
+  }
+  
+  #value .value-intro{ 
+    max-width:68ch; 
+    margin-bottom:12px; 
+  }
+  
+  #value .value-item.value-item--compact h4{ 
+    font-size: 13.5px; 
+  }
+  
+  #value .value-item.value-item--compact .value-pill{ 
+    font-size: 12px; 
+  }
+}
+
+/* Accessibility: reduced motion */
+@media (prefers-reduced-motion: reduce){
+  #value .value-icon, 
+  #value .value-icon svg, 
+  #value .value-item{
+    transition:none !important; 
+    transform:none !important;
+  }
+}
 	
 /* ===== Consent Modal (safe defaults) ===== */
 #consent-overlay[hidden]{ display:none !important; }
@@ -1096,11 +1302,11 @@ body.dark .rec-modal-content::-webkit-scrollbar-track{ background:rgba(255,255,2
 <div id="value" class="card">
   <h3>Чем могу быть полезен</h3>
   <p class="value-intro">
-    Помогаю бизнесу и продуктам системно расти. Выстраиваю прозрачные метрики и управляемую операционку, чтобы быстро выходить на предсказуемые результаты.
+    Выстраиваю операции, которые масштабируются. Строю процессы с нуля, управляю P&L, масштабирую команды.
   </p>
 
   <div class="value-grid">
-    <!-- Аудит -->
+    <!-- Аудит операций -->
     <article class="value-item">
       <div class="value-icon" aria-hidden="true">
         <!-- search -->
@@ -1109,17 +1315,17 @@ body.dark .rec-modal-content::-webkit-scrollbar-track{ background:rgba(255,255,2
         </svg>
       </div>
       <div>
-        <h4>Аудит</h4>
+        <h4>Аудит операций</h4>
         <ul class="value-list">
-          <li>BPM-процессы и регламенты</li>
-          <li>Продукт и воронка ценности</li>
-          <li>Маркетинг и каналы привлечения</li>
-          <li>Финансы, приоритеты, риски</li>
+          <li>Бизнес-процессы и операционная эффективность</li>
+          <li>P&L, маржинальность, рентабельность проектов</li>
+          <li>Команда: загрузка, HR-системы, производительность</li>
+          <li>Управление проектами: сроки, качество, риски</li>
         </ul>
       </div>
     </article>
 
-    <!-- План роста -->
+    <!-- Стратегический план -->
     <article class="value-item">
       <div class="value-icon" aria-hidden="true">
         <!-- route -->
@@ -1128,17 +1334,37 @@ body.dark .rec-modal-content::-webkit-scrollbar-track{ background:rgba(255,255,2
         </svg>
       </div>
       <div>
-        <h4>План роста</h4>
+        <h4>Стратегический план</h4>
         <ul class="value-list">
-          <li>Цели (OKR/KPI) и ключевые метрики</li>
-          <li>Каналы и гипотезы</li>
-          <li>P&amp;L и юнит-экономика</li>
-          <li>Дорожная карта</li>
+          <li>KPI/OKR и система метрик</li>
+          <li>P&L и операционная экономика</li>
+          <li>Операционная дорожная карта</li>
+          <li>Планирование ресурсов и бюджета</li>
         </ul>
       </div>
     </article>
 
-    <!-- Внедрение -->
+    <!-- Масштабирование -->
+    <article class="value-item">
+      <div class="value-icon" aria-hidden="true">
+        <!-- trending-up -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+          <polyline points="17 6 23 6 23 12"></polyline>
+        </svg>
+      </div>
+      <div>
+        <h4>Масштабирование</h4>
+        <ul class="value-list">
+          <li>Построение операций с нуля (0→1)</li>
+          <li>Рост команды: найм, структура, HR-системы</li>
+          <li>Финансовое масштабирование: выручка и маржа</li>
+          <li>Управление портфелем проектов (100+)</li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- Внедрение систем -->
     <article class="value-item">
       <div class="value-icon" aria-hidden="true">
         <!-- sliders -->
@@ -1149,17 +1375,17 @@ body.dark .rec-modal-content::-webkit-scrollbar-track{ background:rgba(255,255,2
         </svg>
       </div>
       <div>
-        <h4>Внедрение</h4>
+        <h4>Внедрение систем</h4>
         <ul class="value-list">
-          <li>CRM и сквозная аналитика</li>
-          <li>Регламенты и автоматизация</li>
-          <li>Карты компетенций, обучение, найм, онбординг</li>
-          <li>Интервью с клиентами и командой</li>
+          <li>Операционные процессы и регламенты</li>
+          <li>Системы управления проектами (CRM)</li>
+          <li>Автоматизация повторяющихся процессов</li>
+          <li>Контроль качества и дедлайнов</li>
         </ul>
       </div>
     </article>
 
-    <!-- Контроль -->
+    <!-- Контроль и отчётность -->
     <article class="value-item">
       <div class="value-icon" aria-hidden="true">
         <!-- activity -->
@@ -1168,16 +1394,39 @@ body.dark .rec-modal-content::-webkit-scrollbar-track{ background:rgba(255,255,2
         </svg>
       </div>
       <div>
-        <h4>Контроль</h4>
+        <h4>Контроль и отчётность</h4>
         <ul class="value-list">
-          <li>Отчётность и бюджетирование</li>
-          <li>Снижение CAC и цикла сделки</li>
-          <li>Рост LTV и маржинальности</li>
+          <li>P&L: план/факт контроль, бюджетирование</li>
+          <li>Операционные метрики: on-time delivery, utilization</li>
+          <li>Маржинальность и рентабельность проектов</li>
+          <li>Дашборды для руководства и борда</li>
         </ul>
       </div>
     </article>
 
-    <!-- Форматы сотрудничества -->
+    <!-- HR-системы и команда -->
+    <article class="value-item">
+      <div class="value-icon" aria-hidden="true">
+        <!-- users -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+      </div>
+      <div>
+        <h4>HR-системы и команда</h4>
+        <ul class="value-list">
+          <li>Грейды, KPI, performance review</li>
+          <li>Карты компетенций и траектории роста</li>
+          <li>Найм, адаптация, онбординг/офбординг</li>
+          <li>1:1, обучение, развитие</li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- Форматы работы -->
     <article class="value-item value-item--compact">
       <div class="value-icon" aria-hidden="true">
         <!-- handshake -->
@@ -1189,35 +1438,32 @@ body.dark .rec-modal-content::-webkit-scrollbar-track{ background:rgba(255,255,2
         </svg>
       </div>
       <div>
-        <h4>Форматы сотрудничества</h4>
+        <h4>Форматы работы</h4>
         <div class="value-pills">
-          <span class="value-pill">Разовый консалтинг</span>
+          <span class="value-pill">Консалтинг и аудит</span>
           <span class="value-pill">Частичная занятость</span>
-          <span class="value-pill">Наставничество команды</span>
-          <span class="value-pill">Фулл-тайм</span>
+          <span class="value-pill">Полная занятость</span>
+          <span class="value-pill">Партнёрство</span>
         </div>
       </div>
     </article>
 
-    <!-- Роли -->
+    <!-- Целевые позиции -->
     <article class="value-item value-item--compact">
       <div class="value-icon" aria-hidden="true">
-        <!-- users -->
+        <!-- briefcase -->
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"></path>
-          <circle cx="9" cy="7" r="4"></circle>
-          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
         </svg>
       </div>
       <div>
-        <h4>Возможные роли</h4>
+        <h4>Целевые позиции</h4>
         <div class="value-pills">
-          <span class="value-pill">Руководитель команды/юнита</span>
-		  <span class="value-pill">Операционный директор</span>
-          <span class="value-pill">Консультант</span>
-          <span class="value-pill">Адвайзер</span>
-		  <span class="value-pill">Помощник CEO</span>
+          <span class="value-pill">Операционный директор</span>
+          <span class="value-pill">Руководитель юнита/департамента</span>
+          <span class="value-pill">Консультант по операциям</span>
+          <span class="value-pill">Адвайзер CEO</span>
         </div>
       </div>
     </article>
@@ -1481,6 +1727,7 @@ window.YM_COUNTER_ID = 104073832;
 	</body>
 
 </html>
+
 
 
 
