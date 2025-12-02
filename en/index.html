@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex, nofollow"/>
+  <meta name="robots" content="index, follow"/>
 
 <!-- Yandex.Metrika -->
 <link rel="preconnect" href="https://mc.yandex.ru">
@@ -18,6 +18,9 @@
   ym(104073832, 'init', {
     ssr:true, webvisor:true, clickmap:true, trackLinks:true,
     accurateTrackBounce:true, ecommerce:'dataLayer'
+  });
+	ym(104073832, 'params', {
+    page_lang: (window.location.pathname === '/en' || window.location.pathname.indexOf('/en/') === 0) ? 'en' : 'ru'
   });
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/104073832" style="position:absolute;left:-9999px;" alt=""></div></noscript>
