@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="Операционный дашборд">
+    <meta property="og:description" content="Анализ рынка подержанной мебели B2C/C2C маркетплейсов Чехии">
+    <meta property="og:image" content="https://site.com/preview.jpg">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Рынок подержанной мебели Чехии | Операционный дашборд</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #faf9f6;
+            color: #334155;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+
+        .nav-btn.active {
+            background-color: #166534;
+            color: white;
+            border-color: #166534;
+        }
+
+        .competitor-card {
+            transition: all 0.3s ease;
+        }
+
+        .competitor-card:hover, .competitor-card.active {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border-color: #166534;
+        }
+
+        .hidden-view {
+            display: none;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <span class="text-2xl">🛋️</span>
+                    <span class="font-bold text-xl text-green-900">CZ Market Ops</span>
+                </div>
+                <div class="hidden lg:flex sm:space-x-2" id="desktop-nav">
+                    <button data-target="overview" class="nav-btn active px-3 py-2 rounded-md text-sm font-medium border border-transparent text-gray-700 hover:bg-green-50">Обзор рынка</button>
+                    <button data-target="segments" class="nav-btn px-3 py-2 rounded-md text-sm font-medium border border-gray-200 text-gray-700 hover:bg-green-50">Аудитория (AJTBD)</button>
+                    <button data-target="competitors" class="nav-btn px-3 py-2 rounded-md text-sm font-medium border border-gray-200 text-gray-700 hover:bg-green-50">Конкуренты</button>
+                    <button data-target="unit-econ" class="nav-btn px-3 py-2 rounded-md text-sm font-medium border border-gray-200 text-gray-700 hover:bg-green-50">Unit-экономика</button>
+                    <button data-target="gtm" class="nav-btn px-3 py-2 rounded-md text-sm font-medium border border-gray-200 text-gray-700 hover:bg-green-50">GTM Стратегия</button>
+                    <button data-target="trust" class="nav-btn px-3 py-2 rounded-md text-sm font-medium border border-gray-200 text-gray-700 hover:bg-green-50">Trust & Safety</button>
+                </div>
+                <div class="lg:hidden flex items-center w-1/2">
+                    <select id="mobile-nav" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm rounded-md">
+                        <option value="overview">Обзор рынка</option>
+                        <option value="segments">Аудитория (AJTBD)</option>
+                        <option value="competitors">Конкуренты</option>
+                        <option value="unit-econ">Unit-экономика</option>
+                        <option value="gtm">GTM Стратегия</option>
+                        <option value="trust">Trust & Safety</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        
+        <!-- СЕКЦИЯ 1: ОБЗОР -->
+        <section id="overview" class="view-section fade-in">
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 mb-4">Макроэкономика: Рынок подержанной мебели (CZ)</h1>
+                <p class="text-lg text-gray-600 leading-relaxed">
+                    Срез рынка B2C/C2C маркетплейсов Чехии. Рынок контролируют горизонтальные доски объявлений без фокуса на логистику и безопасность транзакций. Ниже представлены метрики, определяющие финансовый потенциал вертикального мебельного игрока.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                <!-- Карточка 1 -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Объем рынка ЕС (2024)</h3>
+                        <p class="text-3xl font-bold text-gray-900 my-2">€45.7B</p>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-4 border-t border-gray-50 pt-3">
+                        Ожидаемый CAGR 5.2% до 2033 года. Драйвер: этическое потребление и снижение углеродного следа.
+                    </p>
+                </div>
+
+                <!-- Карточка 2 -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Динамика Чехии (YoY)</h3>
+                        <p class="text-3xl font-bold text-green-700 my-2">+20%</p>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-4 border-t border-gray-50 pt-3">
+                        Ежегодный рост сделок в ресейл-сегменте. Спрос опережает развитие инфраструктуры платформ.
+                    </p>
+                </div>
+
+                <!-- Карточка 3 -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Бенчмарк (Aukro GMV)</h3>
+                        <p class="text-3xl font-bold text-gray-900 my-2">€273M</p>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-4 border-t border-gray-50 pt-3">
+                        Годовой оборот крупнейшего транзакционного маркетплейса Чехии (все категории). Revenue: €10.5M.
+                    </p>
+                </div>
+
+                <!-- Карточка 4 -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-red-100 bg-red-50 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xs font-bold text-red-500 uppercase tracking-wider mb-1">Операционный барьер</h3>
+                        <p class="text-2xl font-bold text-red-900 my-2">Логистика</p>
+                    </div>
+                    <p class="text-sm text-red-700 mt-4 border-t border-red-100 pt-3">
+                        Самовывоз ограничивает сделку радиусом 30-50 км. C2C почтовые сервисы не принимают крупногабарит.
+                    </p>
+                </div>
+
+                <!-- Карточка 5 -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-orange-100 bg-orange-50 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xs font-bold text-orange-500 uppercase tracking-wider mb-1">Trust-Gap (Риск конверсии)</h3>
+                        <p class="text-3xl font-bold text-orange-900 my-2">44%</p>
+                    </div>
+                    <p class="text-sm text-orange-800 mt-4 border-t border-orange-100 pt-3">
+                        Доля покупателей б/у мебели онлайн, получавших товар, не соответствующий описанию.
+                    </p>
+                </div>
+
+                <!-- Карточка 6 -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-green-100 bg-green-50 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xs font-bold text-green-600 uppercase tracking-wider mb-1">Уровень конкуренции</h3>
+                        <p class="text-2xl font-bold text-green-900 my-2">0 Вертикальных</p>
+                    </div>
+                    <p class="text-sm text-green-800 mt-4 border-t border-green-200 pt-3">
+                        Ни один топ-игрок не предлагает мебельные фильтры (размеры), инспекцию и встроенную доставку мебели.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Блок с доступом к полным отчетам -->
+            <div class="mt-12 pt-8 border-t border-gray-200">
+                <h3 class="text-lg font-bold text-gray-900 mb-6">Исходные данные и исследования</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <a href="#link-to-market-research" class="group flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg hover:border-green-600 hover:shadow-md transition-all">
+                        <div class="flex items-center gap-3">
+                            <span class="text-2xl">📊</span>
+                            <div>
+                                <span class="block font-semibold text-gray-800 group-hover:text-green-700 transition-colors">Обзор рынка 2025</span>
+                                <span class="text-xs text-gray-500">Документ Word (35 страниц)</span>
+                            </div>
+                        </div>
+                        <span class="text-gray-400 group-hover:text-green-600">→</span>
+                    </a>
+
+                    <a href="#link-to-competitor-analysis" class="group flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg hover:border-green-600 hover:shadow-md transition-all">
+                        <div class="flex items-center gap-3">
+                            <span class="text-2xl">🎯</span>
+                            <div>
+                                <span class="block font-semibold text-gray-800 group-hover:text-green-700 transition-colors">Конкурентный анализ</span>
+                                <span class="text-xs text-gray-500">Документ Word (Детальный срез)</span>
+                            </div>
+                        </div>
+                        <span class="text-gray-400 group-hover:text-green-600">→</span>
+                    </a>
+
+                    <a href="#link-to-financial-model" class="group flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg hover:border-green-600 hover:shadow-md transition-all">
+                        <div class="flex items-center gap-3">
+                            <span class="text-2xl">🧮</span>
+                            <div>
+                                <span class="block font-semibold text-gray-800 group-hover:text-green-700 transition-colors">Unit-экономика (RAW)</span>
+                                <span class="text-xs text-gray-500">Таблица Excel / CSV</span>
+                            </div>
+                        </div>
+                        <span class="text-gray-400 group-hover:text-green-600">→</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ 2: АУДИТОРИЯ И СЕГМЕНТЫ (AJTBD) -->
+        <section id="segments" class="view-section hidden-view fade-in">
+            <div class="mb-8 border-b border-gray-200 pb-4">
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">AJTBD Сегментация: Драйверы ликвидности</h1>
+                <p class="text-lg text-gray-600">
+                    Анализ Jobs-to-be-Done (AJTBD). Для старта маркетплейса широкая демография не работает. MVP-фокус строится исключительно на жестких жизненных триггерах с коротким окном принятия решений.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <!-- Ядро MVP (Wedge) -->
+                <div class="bg-indigo-50 p-6 rounded-xl border border-indigo-100 shadow-sm flex flex-col">
+                    <h3 class="text-xl font-bold text-indigo-900 mb-4 border-b border-indigo-200 pb-2">🎯 Primary Wedge (Точка входа)</h3>
+                    <p class="text-sm text-gray-700 mb-5 leading-relaxed">Идеальный клин для решения проблемы "курицы и яйца" — англоязычные и русскоязычные экспаты в Праге и Брно. У них максимальная потребность в сервисе и минимальная лояльность к локальным чешским платформам.</p>
+                    
+                    <div class="space-y-4">
+                        <div class="bg-white p-5 rounded-lg border border-indigo-50 shadow-sm">
+                            <strong class="text-sm text-indigo-800 block mb-2 uppercase tracking-wide">📦 Supply (Предложение): Экспаты Move-out</strong>
+                            <p class="text-xs text-gray-600 leading-relaxed"><strong>Триггер:</strong> Нужно срочно освободить арендованную квартиру (переезд в другую страну). Экстремально высокая толерантность к дисконтам на цену мебели. Главная ценность — <strong>скорость выкупа и логистика (заберите все завтра)</strong>.</p>
+                        </div>
+                        <div class="bg-white p-5 rounded-lg border border-indigo-50 shadow-sm">
+                            <strong class="text-sm text-indigo-800 block mb-2 uppercase tracking-wide">🛋️ Demand (Спрос): Экспаты Move-in</strong>
+                            <p class="text-xs text-gray-600 leading-relaxed"><strong>Триггер:</strong> Въезд в пустую квартиру. Нужна база на первое время. Нет времени и желания торговаться на чешском в Bazoš. Готовы на "достаточно хороший" инвентарь. Главная ценность — <strong>доставка до двери и EN/RU-интерфейс</strong>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Эшелоны масштабирования -->
+                <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex flex-col">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4 border-b border-gray-100 pb-2">🌊 Эшелоны масштабирования</h3>
+                    <p class="text-sm text-gray-600 mb-5 leading-relaxed">После захвата ядра экспатов, ликвидность переливается в более широкие сегменты (Волны 2 и 3):</p>
+                    
+                    <ul class="space-y-5 text-sm text-gray-800">
+                        <li class="flex items-start gap-3">
+                            <span class="bg-gray-100 text-gray-600 font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0">1</span>
+                            <div>
+                                <strong class="block mb-1">Студенты и недавние выпускники (Liquidity Layer)</strong>
+                                <p class="text-xs text-gray-500 leading-relaxed">Осенний/весенний циклы миграции. Не самый денежный сегмент, но обеспечивает высочайшую скорость оборачиваемости базовых категорий. Формирует привычку использования платформы (Retention).</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="bg-gray-100 text-gray-600 font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0">2</span>
+                            <div>
+                                <strong class="block mb-1">Городские арендаторы (Scale Layer)</strong>
+                                <p class="text-xs text-gray-500 leading-relaxed">Пары, которые съезжаются или расширяют жилплощадь. Денежный сегмент, требующий широкого ассортимента. Заходят на платформу <strong>только при наличии Escrow (безопасной сделки)</strong> и качественных фото (Trust Layer).</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Ограничение MVP -->
+            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 shadow-sm mb-8">
+                <h3 class="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2"><span>⚠️</span> MVP Constraint (Ограничение ликвидности)</h3>
+                <p class="text-sm text-gray-700 leading-relaxed">
+                    Главная единица ликвидности на старте — <strong>не вся Чехия и не вся мебель</strong>. Операционный фокус сужается до жесткого пересечения: <span class="bg-green-100 text-green-800 px-2 py-0.5 rounded font-medium mx-1">Прага + Брно</span> × <span class="bg-green-100 text-green-800 px-2 py-0.5 rounded font-medium mx-1">Кровати, Матрасы, Столы, Обеденные группы</span>. Распыление маркетингового бюджета на декор, мелкие предметы или регионы обнулит плотность предложений на квадратный километр и убьет Retention.
+                </p>
+            </div>
+
+            <!-- Блок с кнопкой к полному исследованию -->
+            <div class="mt-8 pt-8 border-t border-gray-200 flex justify-center">
+                <a href="#full-segmentation-report" class="inline-flex items-center gap-2 px-8 py-4 bg-indigo-600 text-white font-bold rounded-xl hover:bg-indigo-700 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                    <span class="text-xl">📄</span> 
+                    Открыть полное исследование сегментации (Word)
+                </a>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ 3: КОНКУРЕНТЫ -->
+        <section id="competitors" class="view-section hidden-view fade-in">
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 mb-4">Матрица конкурентов</h1>
+                <p class="text-lg text-gray-600">
+                    Горизонтальные платформы аккумулируют трафик, но не оптимизируют конверсию внутри мебельной вертикали. Выберите игрока для просмотра операционного профиля.
+                </p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-8">
+                <div class="w-full lg:w-1/3 flex flex-col gap-4" id="competitor-list">
+                    <!-- Заполняется через JS -->
+                </div>
+
+                <div class="w-full lg:w-2/3">
+                    <div id="competitor-detail" class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 h-full min-h-[400px]">
+                        <div class="text-center text-gray-400 mt-20">
+                            <span class="text-5xl block mb-4">👈</span>
+                            <p class="text-lg">Выберите конкурента для анализа бизнес-модели</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Стратегический срез -->
+            <div class="mt-8 bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-sm">
+                <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                    <span>⚡</span> Стратегический срез: Расстановка сил
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <h4 class="font-bold text-gray-800 text-sm uppercase tracking-wide mb-2 border-b border-gray-200 pb-2">Монополия Supply-side</h4>
+                        <p class="text-sm text-gray-600">
+                            <strong>Bazoš</strong> и <strong>Sbazar</strong> контролируют объем предложений, но работают по рекламной модели (listing fees). Они не видят GMV и не решают проблему доставки крупногабарита, оставляя трение сделки на пользователях.
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-800 text-sm uppercase tracking-wide mb-2 border-b border-gray-200 pb-2">Иллюзия безопасности</h4>
+                        <p class="text-sm text-gray-600">
+                            <strong>FB Marketplace</strong> генерирует 80% локальных сделок экспатов (Прага/Брно). Однако нулевой барьер для скама и отсутствие Escrow-счетов блокируют предоплату, оставляя рынок в наличной серой зоне.
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-green-800 text-sm uppercase tracking-wide mb-2 border-b border-green-200 pb-2">Окно возможностей</h4>
+                        <p class="text-sm text-gray-600">
+                            На рынке полностью отсутствует <strong>консьерж-слой</strong>. Победа над горизонтальными лидерами возможна только через сервис: стандартизацию карточек, встроенную API-логистику и гаранта сделки (buyer protection).
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ 4: UNIT-ЭКОНОМИКА -->
+        <section id="unit-econ" class="view-section hidden-view fade-in">
+            <div class="mb-8 flex justify-between items-end border-b border-gray-200 pb-4">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Unit-экономика и монетизация</h1>
+                    <p class="text-lg text-gray-600">
+                        Финансовая модель вертикального игрока (Take-rate vs COGS vs CAC).
+                    </p>
+                </div>
+                <div class="text-right text-sm text-gray-500 bg-gray-50 px-3 py-1 rounded border border-gray-200">
+                    * Базовый курс: <strong class="text-gray-700">1 EUR ≈ 25 CZK</strong>
+                </div>
+            </div>
+
+            <!-- Главные метрики -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 relative">
+                    <div class="text-gray-500 text-sm font-semibold uppercase mb-1">Target AOV (Мебель)</div>
+                    <div class="text-3xl font-bold text-gray-900">2 000 – 8 000 CZK</div>
+                    <div class="text-xs font-medium text-gray-400 mt-1">* ≈ 80 – 320 EUR</div>
+                    <div class="text-sm text-gray-600 mt-4 border-t border-gray-50 pt-2">Ожидаемый средний чек в вертикали крупногабаритной мебели.</div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <div class="text-gray-500 text-sm font-semibold uppercase mb-1">Take-Rate (Комиссия)</div>
+                    <div class="text-3xl font-bold text-gray-900">5% – 8%</div>
+                    <div class="text-xs font-medium text-gray-400 mt-1">&nbsp;</div>
+                    <div class="text-sm text-gray-600 mt-4 border-t border-gray-50 pt-2">Комиссия (или Buyer Protection Fee). Выше 8% вызывает отток селлеров.</div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <div class="text-gray-500 text-sm font-semibold uppercase mb-1">Gross Revenue per Tx</div>
+                    <div class="text-3xl font-bold text-green-700">100 – 640 CZK</div>
+                    <div class="text-xs font-medium text-gray-400 mt-1">* ≈ 4 – 25 EUR</div>
+                    <div class="text-sm text-gray-600 mt-4 border-t border-gray-50 pt-2">Грязная выручка платформы с одной сделки (до вычета эквайринга).</div>
+                </div>
+            </div>
+
+            <!-- Операционные расходы и бенчмарки -->
+            <h3 class="text-lg font-bold text-gray-900 mb-4 mt-10">Операционные расходы (COGS) и Бенчмарки</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+                <div class="bg-gray-50 p-5 rounded-lg border border-gray-200">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-xl">💳</span>
+                        <h4 class="font-bold text-gray-800 text-sm">Payment Gateway (COGS)</h4>
+                    </div>
+                    <p class="text-2xl font-bold text-red-700 mb-1">1.5% - 2.9% <span class="text-sm text-gray-500 font-normal">+ fix</span></p>
+                    <p class="text-xs text-gray-600 mt-2">Комиссия Stripe Connect/GoPay за сплит-платежи. Съедает от 20% до 50% вашей 5% комиссии.</p>
+                </div>
+                
+                <div class="bg-gray-50 p-5 rounded-lg border border-gray-200">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-xl">🎯</span>
+                        <h4 class="font-bold text-gray-800 text-sm">Бенчмарк Конверсии (Aukro)</h4>
+                    </div>
+                    <p class="text-2xl font-bold text-gray-900 mb-1">3.5% - 4.0%</p>
+                    <p class="text-xs text-gray-600 mt-2">Базовый Conversion Rate. Задает жесткий потолок для Customer Acquisition Cost (CAC).</p>
+                </div>
+
+                <div class="bg-gray-50 p-5 rounded-lg border border-gray-200">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-xl">🤖</span>
+                        <h4 class="font-bold text-gray-800 text-sm">Затраты на Консьерж</h4>
+                    </div>
+                    <p class="text-lg font-bold text-gray-900 mb-1">Ручная модерация = Убыток</p>
+                    <p class="text-xs text-gray-600 mt-2">Без автоматизации нормализации данных (AI-парсинг фото) косты на саппорт превысят маржу с транзакции.</p>
+                </div>
+            </div>
+
+            <!-- График -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                <div class="flex justify-between items-start mb-6">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-1">Сравнение Revenue Models (на сделке в 5000 CZK)</h3>
+                        <p class="text-sm text-gray-500">Сравнение выручки: классифайд (Bazoš) vs транзакционный маркетплейс.</p>
+                    </div>
+                    <div class="text-xs text-gray-400 text-right">
+                        5000 CZK ≈ 200 EUR<br>
+                        (без учета COGS)
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="revenueModelChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ 5: GTM -->
+        <section id="gtm" class="view-section hidden-view fade-in">
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 mb-4">Стратегия выхода на рынок (GTM)</h1>
+                <p class="text-lg text-gray-600">
+                    Национальный запуск распылит ликвидность. Требуется марафонская выносливость в онбординге локального supply-side. Фокус на плотности предложений в конкретных гео-зонах.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                        <h3 class="text-lg font-bold text-gray-900 border-b pb-2 mb-4">📍 Географический фокус MVP</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <span class="text-green-600 mr-2 font-bold">1.</span>
+                                <div>
+                                    <strong class="block text-gray-800">Прага и Брно</strong>
+                                    <span class="text-sm text-gray-600">Высокая плотность населения, концентрация экспатов (Prague Buy/Sell/Trade). Экономическая целесообразность спотовой логистики.</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-600 mr-2 font-bold">2.</span>
+                                <div>
+                                    <strong class="block text-gray-800">Мультиязычный интерфейс (CZ/EN/RU)</strong>
+                                    <span class="text-sm text-gray-600">Англоязычная и русскоязычная аудитории экспатов генерируют высокую частоту сделок (move-in/move-out). Отсутствие EN/RU-интерфейса у локальных конкурентов — прямой драйвер роста и захвата ядра аудитории.</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                        <h3 class="text-lg font-bold text-gray-900 border-b pb-2 mb-4">📦 Фокусный ассортимент (Hard Constraints)</h3>
+                        <p class="text-sm text-gray-600 mb-3">Ограничение каталога на старте исключительно высокочастотным крупногабаритом:</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">Диваны</span>
+                            <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">Кровати</span>
+                            <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">Матрасы</span>
+                            <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">Столы</span>
+                            <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">Шкафы</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-green-50 p-6 rounded-xl border border-green-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-green-900 border-b border-green-200 pb-2 mb-4">🤝 Операционная модель: Concierge-сервис</h3>
+                    <p class="text-sm text-gray-700 mb-4">
+                        Для победы над Bazoš недостаточно интерфейса. Необходим сервисный слой, забирающий у продавца трение сделки.
+                    </p>
+                    <ul class="space-y-4">
+                        <li class="bg-white p-3 rounded shadow-sm">
+                            <strong class="text-gray-800 text-sm block">1. Помощь с листингом</strong>
+                            <span class="text-xs text-gray-500">Автоматическая нормализация данных, оценка стоимости (pricing suggestions).</span>
+                        </li>
+                        <li class="bg-white p-3 rounded shadow-sm">
+                            <strong class="text-gray-800 text-sm block">2. Управление коммуникацией (SLA)</strong>
+                            <span class="text-xs text-gray-500">Если время ответа продавца > 2-3 часов, конверсия падает. Платформа должна маршрутизировать запросы или брать первичный скоринг на себя.</span>
+                        </li>
+                        <li class="bg-white p-3 rounded shadow-sm">
+                            <strong class="text-gray-800 text-sm block">3. Интеграция локальной логистики</strong>
+                            <span class="text-xs text-gray-500">API интеграция с локальными грузоперевозчиками на этапе чекаута.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Стратегический синтез (Cold Start) -->
+            <div class="mt-8 bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-sm">
+                <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                    <span>⚡</span> Roadmap: Решение проблемы «Холодного старта»
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <h4 class="font-bold text-gray-800 text-sm uppercase tracking-wide mb-2 border-b border-gray-200 pb-2">Фаза 1: Supply-side First</h4>
+                        <p class="text-sm text-gray-600">
+                            Строгий запрет на привлечение покупателей до достижения плотности в 500–1000 SKU в целевом радиусе (Прага). Первичный инвентарь собирается ручным онбордингом селлеров из FB-групп экспатов.
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-800 text-sm uppercase tracking-wide mb-2 border-b border-gray-200 pb-2">Фаза 2: Смещение фокуса</h4>
+                        <p class="text-sm text-gray-600">
+                            Performance-маркетинг (Demand) запускается исключительно на высоколиквидный инвентарь (диваны/кровати). Основной оффер для покупателя — не цена мебели, а наличие опции «доставка до двери».
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-green-800 text-sm uppercase tracking-wide mb-2 border-b border-green-200 pb-2">Фаза 3: Lock-in & Freemium</h4>
+                        <p class="text-sm text-gray-600">
+                            На старте платформа не берет комиссию за размещение. Take-rate применяется <strong>только</strong> при использовании встроенного гаранта сделки (Escrow) и логистики. Самовывоз остается бесплатным для захвата доли.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- B2B2C Хак -->
+                <div class="mt-6 bg-indigo-50 border border-indigo-100 rounded-lg p-5">
+                    <h4 class="font-bold text-indigo-900 text-sm uppercase tracking-wide mb-2 flex items-center gap-2"><span>🔥</span> B2B2C Pipeline (Growth Hack)</h4>
+                    <p class="text-sm text-gray-700 leading-relaxed">
+                        Гораздо более эффективный хак для накачки ликвидности — партнерство с локальными сервисами очистки квартир (vyklízení bytů), агентствами недвижимости (сдача квартир после выезда жильцов) и сервисами аренды мебели. Это даст вам оптовый приток supply-side без необходимости привлекать каждого частного продавца отдельно через дорогие C2C каналы.
+                    </p>
+                </div>
+
+                <!-- Lazy KYC Хак -->
+                <div class="mt-4 bg-blue-50 border border-blue-100 rounded-lg p-5">
+                    <h4 class="font-bold text-blue-900 text-sm uppercase tracking-wide mb-2 flex items-center gap-2"><span>🛡️</span> UX/Conversion Hack: Lazy KYC</h4>
+                    <p class="text-sm text-gray-700 leading-relaxed">
+                        Если вы потребуете у C2C-продавца загрузить ID-карту до того, как он выложит диван, конверсия упадет на 70%. Чтобы этого избежать, внедряется <strong>Lazy KYC (Отложенная верификация)</strong>. Продавец выкладывает товар и общается без KYC. Но как только покупатель нажимает «Купить» и деньги падают на транзитный счет Stripe, продавец получает пуш-уведомление: <em>«Вам оплатили 5000 CZK! Пройдите быструю проверку личности за 2 минуты, чтобы мы могли отгрузить товар и перевести вам деньги»</em>. Мотивация меняется кардинально — KYC проходят почти 100%. Эта механика обязана быть в ТЗ MVP.
+                    </p>
+                </div>
+
+                <!-- ДОБАВЛЕННЫЙ БЛОК: Кросс-языковой поиск и SEO Хак -->
+                <div class="mt-4 bg-teal-50 border border-teal-100 rounded-lg p-5">
+                    <h4 class="font-bold text-teal-900 text-sm uppercase tracking-wide mb-2 flex items-center gap-2"><span>🌐</span> Архитектура поиска & SEO: Language Match</h4>
+                    <p class="text-sm text-gray-700 leading-relaxed mb-3">
+                        Если чешский студент выкладывает объявление "stůl", англоязычный экспат должен найти его по запросу "desk", а русскоязычный — по запросу "стол". Кросс-языковой поиск через LLM-перевод "на лету" решает проблему сведения баз Supply и Demand внутри платформы, но имеет <strong>скрытый баг — отсутствие SEO-индексации</strong>.
+                    </p>
+                    <div class="bg-white p-4 rounded border border-teal-100 text-sm text-gray-800 shadow-sm">
+                        <strong class="text-teal-800 block mb-1">Решение для Organic Acquisition:</strong>
+                        Для захвата органического трафика из Google и Seznam необходима статическая генерация категорийных страниц на трех языках (CZ, EN, RU). Один чешский диван должен генерировать три разных URL-адреса с правильными мета-тегами. Без этого платформа навсегда останется в зависимости от платного трафика, и CAC никогда не сойдется с Unit-экономикой.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ 6: TRUST -->
+        <section id="trust" class="view-section hidden-view fade-in">
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 mb-4">Trust & Safety Фреймворк</h1>
+                <p class="text-lg text-gray-600">
+                    Управление рисками и барьерами конверсии. Отсутствие доверия на платформах-конкурентах блокирует онлайн-предоплату и загоняет рынок в серую зону локального самовывоза.
+                </p>
+            </div>
+
+            <!-- Матрица Рисков -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-red-50 p-6 rounded-xl border border-red-200 shadow-sm flex flex-col">
+                    <h3 class="font-bold text-red-900 mb-2 flex items-center gap-2"><span>⚖️</span> Legal Void (P2P)</h3>
+                    <p class="text-gray-800 text-sm">
+                        Закон о защите потребителей в Чехии распространяется <strong>только на B2C сделки</strong>. P2P-сегмент лишен юридической защиты. Риски полностью переложены на покупателя.
+                    </p>
+                </div>
+
+                <div class="bg-orange-50 p-6 rounded-xl border border-orange-200 shadow-sm flex flex-col justify-center items-center text-center">
+                    <h3 class="font-bold text-orange-900 mb-2 w-full text-left flex items-center gap-2"><span>📦</span> Mismatch Rate</h3>
+                    <div class="flex flex-col items-center mt-2">
+                        <span class="text-5xl font-bold text-orange-700 mb-2">44%</span>
+                        <p class="text-gray-700 text-sm px-2">покупателей получают б/у мебели, не соответствующую изначальному описанию.</p>
+                    </div>
+                </div>
+
+                <div class="bg-purple-50 p-6 rounded-xl border border-purple-200 shadow-sm flex flex-col">
+                    <h3 class="font-bold text-purple-900 mb-2 flex items-center gap-2"><span>🎣</span> Эпидемия Scam-а</h3>
+                    <p class="text-gray-800 text-sm">
+                        На Bazoš и Sbazar фиксируются массовые фишинговые атаки через поддельные ссылки на доставку. Итог: аудитория панически избегает онлайн-платежей на классифайдах.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Финансовый контур (Escrow + Stripe) -->
+            <div class="bg-white p-8 rounded-xl border border-gray-200 shadow-sm mb-8">
+                <h3 class="text-xl font-bold text-gray-900 mb-4 border-b border-gray-100 pb-3">Архитектура удержания средств (Escrow)</h3>
+                <div class="flex flex-col md:flex-row gap-8 items-center">
+                    <div class="flex-1">
+                        <p class="text-sm text-gray-600 mb-5 leading-relaxed">Внедрение бенчмарка Aukro (Buyer Protection). Единственный способ обойти правовой вакуум P2P-сделок — выступление платформы в роли независимого арбитра транзакции.</p>
+                        <ul class="space-y-4 text-sm text-gray-800">
+                            <li class="flex items-start gap-3">
+                                <span class="bg-green-100 text-green-800 font-bold rounded-full w-6 h-6 flex items-center justify-center shrink-0">1</span>
+                                <div><strong>Stripe Connect (Payment Hold):</strong> Холдирование средств по директиве PSD2. Решает проблему доверия покупателя, но вводит барьер: продавцы обязаны пройти KYC (верификацию ID) для вывода денег.</div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="bg-green-100 text-green-800 font-bold rounded-full w-6 h-6 flex items-center justify-center shrink-0">2</span>
+                                <div><strong>Closed Ecosystem:</strong> Жесткая блокировка внешних ссылок (WhatsApp, SMS) внутри встроенного чата для защиты от фишинга.</div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="bg-green-100 text-green-800 font-bold rounded-full w-6 h-6 flex items-center justify-center shrink-0">3</span>
+                                <div><strong>Release Funds:</strong> Выплата продавцу инициируется только после системного подтверждения приема груза логистическим партнером.</div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="w-full md:w-1/3 flex flex-col items-center justify-center p-6 bg-gray-50 rounded-xl border border-gray-200">
+                        <span class="text-xs text-gray-500 uppercase tracking-widest font-semibold mb-2">Escrow Impact</span>
+                        <span class="text-4xl font-bold text-green-700">+300%</span>
+                        <span class="text-sm text-gray-600 text-center mt-3 border-t border-gray-200 pt-3">Рост готовности к предоплате (Conversion to Payment) при наличии гаранта.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Операционный контур (вкл. Видео) -->
+            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                <h3 class="text-lg font-bold text-gray-900 mb-4">Операционный контур: Стандарты листинга</h3>
+                <p class="text-sm text-gray-600 mb-6">Программное форсирование параметров до публикации объявления нивелирует риск Mismatch-а (44%) и обрезает Dispute Rate:</p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="border border-gray-100 bg-gray-50 p-4 rounded-lg">
+                        <span class="block text-xl mb-2">📸</span>
+                        <strong class="text-sm text-gray-800 block mb-1">Визуальная инспекция</strong>
+                        <p class="text-xs text-gray-500">Обязательный минимум 3-5 фото, включая макросъемку дефектов. Блокировка стоковых изображений.</p>
+                    </div>
+                    <div class="border border-green-200 bg-green-50 p-4 rounded-lg shadow-inner">
+                        <span class="block text-xl mb-2">🎥</span>
+                        <strong class="text-sm text-green-900 block mb-1">Видео-валидация</strong>
+                        <p class="text-xs text-green-800">Обязательное 10-секундное видео состояния до отгрузки. Защита платформы от расходов на арбитраж споров.</p>
+                    </div>
+                    <div class="border border-gray-100 bg-gray-50 p-4 rounded-lg">
+                        <span class="block text-xl mb-2">📏</span>
+                        <strong class="text-sm text-gray-800 block mb-1">Жесткая таксономия</strong>
+                        <p class="text-xs text-gray-500">Точные габариты (ВxШxГ). Свободный текстовый ввод недопустим (только числовые поля).</p>
+                    </div>
+                    <div class="border border-gray-100 bg-gray-50 p-4 rounded-lg">
+                        <span class="block text-xl mb-2">🏢</span>
+                        <strong class="text-sm text-gray-800 block mb-1">Логистические метаданные</strong>
+                        <p class="text-xs text-gray-500">Этаж, наличие грузового лифта, возможность разборки. Критично для расчета стоимости API-доставки.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const competitorsData = [
+            {
+                id: 'bazos',
+                name: 'Bazoš.cz',
+                icon: '🛒',
+                type: 'Classifieds / Доска объявлений',
+                traffic: '15.5–16 млн визитов/мес (14 стр/визит)',
+                audience: 'Масс-маркет, 61% мужчины',
+                description: 'Абсолютный лидер по ликвидности. Монетизация строится на платных поднятиях (topování) за 59 CZK. Платформа не контролирует транзакции и не видит GMV.',
+                pros: ['~73 000+ активных объявлений (мебель)', 'Быстрый приток supply-side', 'Нулевой барьер входа'],
+                cons: ['Отсутствие buyer protection', 'P2P-модель без гарантий', 'Слабый UX']
+            },
+            {
+                id: 'sbazar',
+                name: 'Sbazar.cz',
+                icon: '🔴',
+                type: 'Classifieds (экосистема Seznam)',
+                traffic: '3.4–3.6 млн визитов/мес',
+                audience: 'Регионы Чехии, пользователи Seznam',
+                description: 'Системный классифайд с сильным поисковым интентом. Почти половина (47.36%) десктопного трафика — органика.',
+                pros: ['Более чистый UX', 'Органический поисковый трафик', '2 млн+ активных объявлений (всего)'],
+                cons: ['Отсутствие встроенной логистики', 'Монетизация только через промо-позиции']
+            },
+            {
+                id: 'aukro',
+                name: 'Aukro.cz',
+                icon: '🔨',
+                type: 'Marketplace / Commission-based',
+                traffic: '6.4–6.8 млн визитов/мес',
+                audience: 'Коллекционеры, фокус на vintage/design',
+                description: 'Единственный крупный игрок с работающей комиссионной моделью. Выручка за 2024 год составила €10.5M при стабильной конверсии 3.5–4%.',
+                pros: ['Escrow-модель расчетов (Buyer Protection)', 'Подходит для дорогих сделок', 'Понятная unit-экономика (take-rate)'],
+                cons: ['Ориентация не на mass-market', 'Сложный онбординг продавца']
+            },
+            {
+                id: 'fb',
+                name: 'Facebook Marketplace',
+                icon: '👥',
+                type: 'Social / Freemium',
+                traffic: '3–5 млн активных пользователей',
+                audience: 'Экспаты, Прага/Брно (25-45 лет)',
+                description: 'Доминирует в локальных сделках (move-in/move-out) в Праге. Сильно поддерживается сообществами экспатов (Prague Buy/Sell/Trade).',
+                pros: ['Высокая локальная ликвидность', 'Бесплатно для продавца', 'Интеграция с Messenger'],
+                cons: ['Высокий риск мошенничества', 'Отсутствие стандартизации карточек', 'Транзакции вне платформы']
+            },
+            {
+                id: 'vinted',
+                name: 'Vinted (Home)',
+                icon: '👗',
+                type: 'C2C Marketplace / Buyer-fee',
+                traffic: '1 млн+ пользователей в CZ',
+                audience: 'Женщины 18–35 лет, cross-border',
+                description: 'Масштабируемая модель монетизации через Buyer protection fee (~5% + фикс от покупателя).',
+                pros: ['Отличный UX/Мобайл', 'Защита сделки', 'Бесплатный вход для продавца'],
+                cons: ['Не решена логистика крупногабаритной мебели']
+            },
+            {
+                id: 'annonce',
+                name: 'Annonce.cz',
+                icon: '📰',
+                type: 'National Classified',
+                traffic: '~895 тыс. визитов/мес',
+                audience: 'Консервативная аудитория, длинный хвост SEO',
+                description: 'Игрок второго эшелона, собирающий остаточный спрос. Имеет около 1 000 объявлений в категории мебели.',
+                pros: ['SEO-хвост', 'Стандартизированная структура подкатегорий'],
+                cons: ['Низкий трафик', 'Размытый фокус']
+            }
+        ];
+
+        let chartsRendered = false;
+
+        function initApp() {
+            setupNavigation();
+            renderCompetitorList();
+            if (competitorsData.length > 0) {
+                setTimeout(() => {
+                    const firstCard = document.querySelector('.competitor-card');
+                    if (firstCard) selectCompetitor(competitorsData[0].id, firstCard);
+                }, 100);
+            }
+        }
+
+        function setupNavigation() {
+            const buttons = document.querySelectorAll('.nav-btn');
+            const mobileNav = document.getElementById('mobile-nav');
+
+            buttons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const target = e.target.getAttribute('data-target');
+                    switchView(target);
+                    updateNavState(target, buttons, mobileNav);
+                });
+            });
+
+            mobileNav.addEventListener('change', (e) => {
+                const target = e.target.value;
+                switchView(target);
+                updateNavState(target, buttons, mobileNav);
+            });
+        }
+
+        function updateNavState(target, buttons, mobileNav) {
+            buttons.forEach(b => {
+                b.classList.remove('active', 'bg-green-800', 'text-white');
+                b.classList.add('text-gray-700', 'border-transparent');
+                if (b.getAttribute('data-target') === target) {
+                    b.classList.add('active');
+                    b.classList.remove('text-gray-700', 'border-transparent');
+                }
+            });
+            mobileNav.value = target;
+        }
+
+        function switchView(viewId) {
+            document.querySelectorAll('.view-section').forEach(section => {
+                section.classList.add('hidden-view');
+            });
+            document.getElementById(viewId).classList.remove('hidden-view');
+            
+            if (viewId === 'unit-econ' && !chartsRendered) {
+                renderCharts();
+                chartsRendered = true;
+            }
+        }
+
+        function renderCompetitorList() {
+            const container = document.getElementById('competitor-list');
+            container.innerHTML = '';
+
+            competitorsData.forEach(comp => {
+                const card = document.createElement('div');
+                card.className = 'competitor-card bg-white border border-gray-200 rounded-lg p-4 cursor-pointer flex items-center gap-4';
+                card.onclick = () => selectCompetitor(comp.id, card);
+                
+                card.innerHTML = `
+                    <div class="text-3xl">${comp.icon}</div>
+                    <div>
+                        <h4 class="font-bold text-gray-800 text-lg">${comp.name}</h4>
+                        <p class="text-xs text-gray-500 uppercase tracking-wide mt-1">${comp.type}</p>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function selectCompetitor(id, cardElement) {
+            document.querySelectorAll('.competitor-card').forEach(c => {
+                c.classList.remove('border-green-600', 'bg-green-50');
+            });
+            cardElement.classList.add('border-green-600', 'bg-green-50');
+
+            const comp = competitorsData.find(c => c.id === id);
+            const detailContainer = document.getElementById('competitor-detail');
+
+            let prosHtml = comp.pros.map(p => `<li class="flex items-start"><span class="text-green-500 mr-2">✓</span><span>${p}</span></li>`).join('');
+            let consHtml = comp.cons.map(c => `<li class="flex items-start"><span class="text-red-500 mr-2">✗</span><span>${c}</span></li>`).join('');
+
+            detailContainer.innerHTML = `
+                <div class="flex items-center gap-4 mb-6 border-b border-gray-100 pb-4">
+                    <div class="text-5xl">${comp.icon}</div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">${comp.name}</h2>
+                        <span class="inline-block bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded mt-1">${comp.type}</span>
+                    </div>
+                </div>
+                
+                <p class="text-gray-700 leading-relaxed mb-8 text-lg">${comp.description}</p>
+                
+                <div class="grid grid-cols-2 gap-4 mb-8 bg-gray-50 p-4 rounded-lg border border-gray-100">
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase font-semibold">Оценка трафика</p>
+                        <p class="font-bold text-gray-800 mt-1">${comp.traffic}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase font-semibold">Аудитория</p>
+                        <p class="font-bold text-gray-800 mt-1">${comp.audience}</p>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-bold text-gray-800 mb-3 flex items-center gap-2"><span>Преимущества</span></h4>
+                        <ul class="space-y-2 text-gray-600 text-sm">
+                            ${prosHtml}
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-800 mb-3 flex items-center gap-2"><span>Ограничения (Bottlenecks)</span></h4>
+                        <ul class="space-y-2 text-gray-600 text-sm">
+                            ${consHtml}
+                        </ul>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderCharts() {
+            const revCtx = document.getElementById('revenueModelChart').getContext('2d');
+            new Chart(revCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Classified (Topování)', 'Marketplace (Take-rate 5%)', 'Marketplace (Take-rate 8%)'],
+                    datasets: [{
+                        label: 'Выручка платформы с 1 сделки',
+                        data: [59, 250, 400],
+                        backgroundColor: [
+                            '#9ca3af',
+                            '#22c55e',
+                            '#166534'
+                        ],
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const czk = context.parsed.y;
+                                    const eur = (context.parsed.y / 25).toFixed(1);
+                                    return `${czk} CZK (≈ ${eur} EUR)`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { borderDash: [4, 4], color: '#f3f4f6' },
+                            title: { display: true, text: 'CZK' }
+                        },
+                        x: {
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        window.onload = initApp;
+    </script>
+</body>
+</html>
