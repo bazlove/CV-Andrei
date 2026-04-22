@@ -467,6 +467,32 @@
   opacity:1;
   transform:translateY(0);
 }
+.footer-pdf-link{
+  position:relative;
+}
+
+.footer-link-feedback{
+  position:absolute;
+  left:0;
+  bottom:calc(100% + 0.45rem);
+  padding:0.28rem 0.5rem;
+  border-radius:0.45rem;
+  background:color-mix(in srgb, var(--color-green) 92%, transparent);
+  color:#fff;
+  font-size:0.6875rem;
+  line-height:1.2;
+  white-space:nowrap;
+  opacity:0;
+  transform:translateY(2px);
+  pointer-events:none;
+  transition:opacity var(--ease), transform var(--ease);
+  z-index:21;
+}
+
+.footer-pdf-link.is-triggered .footer-link-feedback{
+  opacity:1;
+  transform:translateY(0);
+}
   /* --- 4. Components: cards --- */
   .card{
     background:var(--color-surface);
@@ -1522,7 +1548,7 @@
     <h2 id="consent-title">Cookies and Analytics</h2>
     <p>
       This site uses anonymized web analytics only with your consent.
-      See the <a href="./privacy.html">Privacy Policy</a> for details.
+      See the <a href="../privacy.html">Privacy Policy</a> for details.
     </p>
     <div class="consent-actions">
       <button id="consent-accept" type="button">Accept</button>
@@ -1942,7 +1968,10 @@
           <strong>Navigation</strong>
           <nav class="footer-link-row" aria-label="Footer menu">
             <a href="#top" class="back-to-top" id="backToTop">Back to Top</a>
-            <a id="footer-link-pdf-en" href="#" data-href="../files/CV_EN_Andrei_Bazlov.pdf" download target="_blank" rel="noopener">Download CV</a>
+				<a id="footer-link-pdf-en" class="footer-pdf-link" href="#" data-href="../files/CV_EN_Andrei_Bazlov.pdf" data-download-feedback="Uploading PDF" download target="_blank" rel="noopener">
+					<span class="footer-pdf-link-label">Download CV</span>
+					<span class="footer-link-feedback" aria-live="polite"></span>
+				</a>
             <a href="https://cv.bazlove.com/" target="_blank" rel="noopener noreferrer">Discuss a Project</a>
           </nav>
         </div>
@@ -1951,7 +1980,7 @@
         <div class="footer-sub-inner">
           <div class="footer-sub-copy">
             <p class="footer-line">Location: Serbia. <span class="footer-location-break">Working with teams and projects worldwide.</span></p>
-            <p class="footer-bottom">All rights reserved © 2026 · <a href="./privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a></p>
+            <p class="footer-bottom">All rights reserved © 2026 · <a href="../privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a></p>
           </div>
           <div class="footer-menu-theme">
             <label class="switch" aria-label="Switch color theme">
@@ -2112,6 +2141,21 @@
     }
   }
 
+  function showFooterPdfFeedback(el) {
+    var feedback = el.querySelector('.footer-link-feedback');
+    if (!feedback) return;
+
+    var text = el.getAttribute('data-download-feedback') || 'Opening PDF';
+    feedback.textContent = text;
+    el.classList.add('is-triggered');
+
+    if (el._feedbackTimer) window.clearTimeout(el._feedbackTimer);
+    el._feedbackTimer = window.setTimeout(function () {
+      el.classList.remove('is-triggered');
+      feedback.textContent = '';
+    }, 1400);
+  }
+
   var path = window.location.pathname || '/';
   var isEn = path === '/en' || path.indexOf('/en/') === 0;
 
@@ -2126,20 +2170,17 @@
 
   if (!links.length) return;
 
-  function bindClick(el, goal) {
-    if (!el) return;
-    el.addEventListener('click', function () {
-      safeYmReach(goal, getUTMs());
-    });
-  }
-
   links.forEach(function (item) {
     var rawHref = item.el.getAttribute('data-href') || item.el.getAttribute('href') || '';
     item.el.href = withUTM(rawHref);
     item.el.setAttribute('target', '_blank');
     item.el.setAttribute('rel', 'noopener');
     item.el.hidden = isEn ? item.lang !== 'en' : item.lang !== 'ru';
-    bindClick(item.el, item.goal);
+
+    item.el.addEventListener('click', function () {
+      safeYmReach(item.goal, getUTMs());
+      showFooterPdfFeedback(item.el);
+    });
   });
 }
 
