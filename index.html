@@ -465,6 +465,32 @@
   opacity:1;
   transform:translateY(0);
 }
+.footer-pdf-link{
+  position:relative;
+}
+
+.footer-link-feedback{
+  position:absolute;
+  left:0;
+  bottom:calc(100% + 0.45rem);
+  padding:0.28rem 0.5rem;
+  border-radius:0.45rem;
+  background:color-mix(in srgb, var(--color-green) 92%, transparent);
+  color:#fff;
+  font-size:0.6875rem;
+  line-height:1.2;
+  white-space:nowrap;
+  opacity:0;
+  transform:translateY(2px);
+  pointer-events:none;
+  transition:opacity var(--ease), transform var(--ease);
+  z-index:21;
+}
+
+.footer-pdf-link.is-triggered .footer-link-feedback{
+  opacity:1;
+  transform:translateY(0);
+}
   /* --- 4. Components: cards --- */
   .card{
     background:var(--color-surface);
@@ -1939,7 +1965,10 @@
           <strong>Навигация</strong>
           <nav class="footer-link-row" aria-label="Меню в подвале">
             <a href="#top" class="back-to-top" id="backToTop">Наверх</a>
-            <a id="footer-link-pdf-ru" href="#" data-href="./files/CV_RU_Andrei_Bazlov.pdf" download target="_blank" rel="noopener">Скачать CV</a>
+				<a id="footer-link-pdf-ru" class="footer-pdf-link" href="#" data-href="./files/CV_RU_Andrei_Bazlov.pdf" data-download-feedback="Скачивание PDF" download target="_blank" rel="noopener">
+					<span class="footer-pdf-link-label">Скачать CV</span>
+					<span class="footer-link-feedback" aria-live="polite"></span>
+				</a>
             <a href="https://cv.bazlove.com/" target="_blank" rel="noopener noreferrer">Обсудить проект</a>
           </nav>
         </div>
@@ -2109,6 +2138,21 @@
     }
   }
 
+  function showFooterPdfFeedback(el) {
+    var feedback = el.querySelector('.footer-link-feedback');
+    if (!feedback) return;
+
+    var text = el.getAttribute('data-download-feedback') || 'Opening PDF';
+    feedback.textContent = text;
+    el.classList.add('is-triggered');
+
+    if (el._feedbackTimer) window.clearTimeout(el._feedbackTimer);
+    el._feedbackTimer = window.setTimeout(function () {
+      el.classList.remove('is-triggered');
+      feedback.textContent = '';
+    }, 1400);
+  }
+
   var path = window.location.pathname || '/';
   var isEn = path === '/en' || path.indexOf('/en/') === 0;
 
@@ -2123,20 +2167,17 @@
 
   if (!links.length) return;
 
-  function bindClick(el, goal) {
-    if (!el) return;
-    el.addEventListener('click', function () {
-      safeYmReach(goal, getUTMs());
-    });
-  }
-
   links.forEach(function (item) {
     var rawHref = item.el.getAttribute('data-href') || item.el.getAttribute('href') || '';
     item.el.href = withUTM(rawHref);
     item.el.setAttribute('target', '_blank');
     item.el.setAttribute('rel', 'noopener');
     item.el.hidden = isEn ? item.lang !== 'en' : item.lang !== 'ru';
-    bindClick(item.el, item.goal);
+
+    item.el.addEventListener('click', function () {
+      safeYmReach(item.goal, getUTMs());
+      showFooterPdfFeedback(item.el);
+    });
   });
 }
 
