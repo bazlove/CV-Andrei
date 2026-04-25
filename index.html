@@ -1120,6 +1120,9 @@
     align-self:flex-end;
     flex-shrink:0;
   }
+  .footer-location-br{
+    display:block;
+  }
 
   /* --- 5. Utilities --- */
   .section-lead{ font-size:0.9375rem; line-height:1.55; color:var(--color-text-muted); margin:0 0 0.75rem; max-width:48rem; }
@@ -1449,13 +1452,6 @@
       width:100%;
       text-align:left;
     }
-    .footer-sub-copy .footer-line:first-child{
-      max-width:none;
-      line-height:1.42;
-    }
-    .footer-location-break{
-      display:inline;
-    }
     .footer-sub .footer-bottom{
       margin-top:0;
     }
@@ -1466,6 +1462,9 @@
       width:100%;
       justify-content:flex-start;
       align-self:flex-start;
+    }
+	.footer-location-br{
+      display:block;
     }
     .rec{ padding:0.875rem 1rem 1rem; }
     .rec-quote blockquote{ font-size:0.8125rem; }
@@ -1976,7 +1975,7 @@
       <div class="footer-sub" aria-label="Дополнительная информация">
         <div class="footer-sub-inner">
           <div class="footer-sub-copy">
-            <p class="footer-line">Локация: Сербия. <span class="footer-location-break">Работаю с командами и проектами по всему миру.</span></p>
+			  <p class="footer-line">Локация: Сербия.<br class="footer-location-br"> Работаю с командами и проектами по всему миру.</p>
             <p class="footer-bottom">Все права защищены © 2026 · <a href="./privacy.html" target="_blank" rel="noopener noreferrer">Политика конфиденциальности</a></p>
           </div>
           <div class="footer-menu-theme">
