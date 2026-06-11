@@ -57,10 +57,17 @@
   <meta name="twitter:description" content="Операционный лидер для усиления IT и digital бизнеса. Отвечаю за P&amp;L, процессы, команды, маржу, клиентский сервис и масштабирование.">
   <meta name="twitter:image" content="https://cv.bazlove.com/og-image.jpg">
 
-<script type="application/ld+json">
+	<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://cv.bazlove.com/#website",
+      "url": "https://cv.bazlove.com/",
+      "name": "CV — Андрей Базлов",
+      "inLanguage": "ru"
+    },
     {
       "@type": "ProfilePage",
       "@id": "https://cv.bazlove.com/#profilepage",
@@ -68,21 +75,43 @@
       "name": "Андрей Базлов - COO / Операционный директор в IT и digital",
       "description": "Резюме операционного лидера в IT и digital: P&L, процессы, команды, маржа, клиентский сервис и масштабирование.",
       "inLanguage": "ru",
+      "isPartOf": {
+        "@id": "https://cv.bazlove.com/#website"
+      },
       "mainEntity": {
         "@id": "https://pro.bazlove.com/#person"
-      },
-      "isPartOf": {
-        "@type": "WebSite",
-        "@id": "https://cv.bazlove.com/#website",
-        "url": "https://cv.bazlove.com/"
       }
     },
     {
       "@type": "Person",
       "@id": "https://pro.bazlove.com/#person",
       "name": "Andrei Bazlov",
-      "alternateName": "Андрей Базлов",
+      "alternateName": [
+        "Андрей Базлов",
+        "Bazlov Andrei"
+      ],
       "url": "https://pro.bazlove.com/",
+      "jobTitle": [
+        "COO",
+        "Операционный директор",
+        "Head of Operations",
+        "P&L Owner"
+      ],
+      "description": "Операционный лидер с более 10 лет опыта в IT и digital. Управляю P&amp;L, процессами и командами. Помогаю диджитал агентствам, IT-командам и SaaS расти без потери управляемости, маржи и качества результата.",
+      "knowsAbout": [
+        "P&L",
+        "Операционное управление",
+        "Business Operations",
+        "Head of Operations",
+        "Digital agencies",
+        "SaaS",
+        "Unit economics",
+        "Management reporting",
+        "Process automation",
+        "Team scaling",
+        "Performance management",
+        "Client service"
+      ],
       "sameAs": [
         "https://www.linkedin.com/in/bazlov/",
         "https://t.me/bazlov",
@@ -91,6 +120,58 @@
         "https://pro.bazlove.com/digital/",
 	    "https://career.habr.com/bazlove",
 	    "https://vc.ru/id991111"
+      ],
+      "subjectOf": [
+        {
+          "@type": "CreativeWork",
+          "@id": "https://pro.bazlove.com/digital/#project",
+          "name": "Карта IT и digital работодателей России",
+          "url": "https://pro.bazlove.com/digital/"
+        }
+      ],
+      "review": [
+        {
+          "@type": "Review",
+          "@id": "https://cv.bazlove.com/#review-ceo-impulse-guru",
+          "name": "Рекомендация от Генерального директора impulse.guru",
+          "inLanguage": "ru",
+          "itemReviewed": {
+            "@id": "https://pro.bazlove.com/#person"
+          },
+          "author": {
+            "@type": "Person",
+            "name": "Илья Русаков",
+            "jobTitle": "CEO & Founder",
+            "worksFor": {
+              "@type": "Organization",
+              "name": "impulse.guru",
+              "url": "https://impulse.guru/"
+            }
+          },
+          "reviewBody": "За время работы Андрей курировал операционную деятельность и управленческую отчётность. Отвечал за бюджетирование, построение и улучшение бизнес-процессов, планирование ресурсов, взаимодействие с ключевыми клиентами, партнёрами и руководителями направлений.",
+          "url": "https://cv.bazlove.com/#recommendations"
+        },
+        {
+          "@type": "Review",
+          "@id": "https://cv.bazlove.com/#review-account-director-impulse-guru",
+          "name": "Рекомендация от Аккаунт-директора impulse.guru",
+          "inLanguage": "ru",
+          "itemReviewed": {
+            "@id": "https://pro.bazlove.com/#person"
+          },
+          "author": {
+            "@type": "Person",
+            "name": "Александр Якушев",
+            "jobTitle": "Директор по работе с клиентами",
+            "worksFor": {
+              "@type": "Organization",
+              "name": "impulse.guru",
+              "url": "https://impulse.guru/"
+            }
+          },
+          "reviewBody": "Андрей отвечал за организацию выполнения проектов от запуска до релиза: планирование бюджета и объёма работ, контроль качества и сроков, распределение нагрузки и координацию межфункциональных команд разных отделов.",
+          "url": "https://cv.bazlove.com/#recommendations"
+        }
       ]
     }
   ]
@@ -1841,7 +1922,7 @@
 
   <div class="recs-grid">
     <!-- #1 -->
-    <article class="rec" itemscope itemtype="https://schema.org/Review">
+    <article class="rec">
       <div class="rec-face">
         <img
           src="./images/foto_01.jpg"
@@ -1850,7 +1931,7 @@
           loading="lazy" decoding="async"
         />
         <div class="rec-caption">
-          <p class="rec-name" itemprop="author">Илья Русаков</p>
+          <p class="rec-name">Илья Русаков</p>
           <p class="rec-title">CEO &amp; Founder</p>
           <p class="rec-company">impulse.guru</p>
         </div>
@@ -1858,7 +1939,7 @@
 
       <div class="rec-body">
         <div class="rec-quote rec-quote--box">
-          <blockquote itemprop="reviewBody">
+          <blockquote>
             «За время работы Андрей курировал операционную деятельность и управленческую отчётность. Отвечал за бюджетирование, построение и улучшение бизнес-процессов, планирование ресурсов, взаимодействие с ключевыми клиентами, партнёрами и руководителями направлений.»
           </blockquote>
           <span class="rec-mark" aria-hidden="true"></span>
@@ -1892,7 +1973,7 @@
     </article>
 
     <!-- #2 -->
-    <article class="rec" itemscope itemtype="https://schema.org/Review">
+    <article class="rec">
       <div class="rec-face">
         <img
           src="./images/foto_02.jpg"
@@ -1901,7 +1982,7 @@
           loading="lazy" decoding="async"
         />
         <div class="rec-caption">
-          <p class="rec-name" itemprop="author">Александр Якушев</p>
+          <p class="rec-name">Александр Якушев</p>
           <p class="rec-title">Директор по работе с клиентами</p>
           <p class="rec-company">impulse.guru</p>
         </div>
@@ -1909,7 +1990,7 @@
 
       <div class="rec-body">
         <div class="rec-quote rec-quote--box">
-          <blockquote itemprop="reviewBody">
+          <blockquote>
             «Андрей отвечал за организацию выполнения проектов от запуска до релиза: планирование бюджета и объёма работ, контроль качества и сроков, распределение нагрузки и координацию межфункциональных команд разных отделов.»
           </blockquote>
           <span class="rec-mark" aria-hidden="true"></span>
