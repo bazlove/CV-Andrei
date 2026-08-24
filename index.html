@@ -2075,8 +2075,8 @@
           <div class="achievement-topline">
             <p class="achievement-eyebrow">Исполнение</p>
             <div class="achievement-metrics" aria-label="Ключевые метрики">
-              <span class="achievement-metric">&gt;≈90% сроки</span>
-              <span class="achievement-metric">&gt;≈85% загрузка</span>
+              <span class="achievement-metric">&gt; ≈90% сроки</span>
+              <span class="achievement-metric">&gt; ≈85% загрузка</span>
             </div>
           </div>
           <h4 class="achievement-title">Управляемый баланс сроков и загрузки</h4>
@@ -2815,6 +2815,39 @@ function initCopyEmail() {
     items.forEach(function (el) { observer.observe(el); });
   }
 
+/* --- smooth internal anchor navigation --- */
+function initSmoothAnchors() {
+  var links = [].slice.call(
+    document.querySelectorAll('a[href^="#"]:not([href="#"]):not(#backToTop)')
+  );
+
+  if (!links.length) return;
+
+  links.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var href = link.getAttribute('href');
+
+      if (!href || href === '#') return;
+
+      var id = href.slice(1);
+      var target = document.getElementById(id);
+
+      if (!target) return;
+
+      e.preventDefault();
+
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+
+      if (window.history && window.history.replaceState) {
+        window.history.replaceState(null, '', '#' + id);
+      }
+    });
+  });
+}
+	
   onReady(function () {
     initLangSwitch();
     initTheme();
@@ -2825,6 +2858,7 @@ function initCopyEmail() {
     initScrollProgress();
     initRecommendationModal();
     initRevealOnScroll();
+	initSmoothAnchors();
   });
 })(window, document);
   </script>
