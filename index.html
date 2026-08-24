@@ -229,9 +229,11 @@
   *,*::before,*::after{ box-sizing:border-box }
   html{ scroll-behavior:smooth }
   @media (prefers-reduced-motion: reduce){
-    html{ scroll-behavior:auto }
-    *,*::before,*::after{ animation:none !important; transition-duration:0.01ms !important }
+  *,*::before,*::after{
+    animation:none !important;
+    transition-duration:0.01ms !important;
   }
+}
   body{
     margin:0;
     background:var(--color-bg);
@@ -2272,7 +2274,7 @@
           </div>
         </div>
         <p class="about-role-note">
-          Ключевой критерий: не название должности, а реальная ответственность за экономику, процессы, команду и результат.
+          Готов рассмотреть формат с более узкой зоной ответственности на старте, если возможно ее расширять по мере результатов и роста доверия.
         </p>
     </section>
 
